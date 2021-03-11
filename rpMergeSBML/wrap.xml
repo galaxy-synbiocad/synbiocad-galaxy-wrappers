@@ -1,0 +1,148 @@
+<tool id="rpMergeSBML" name="Merge SBML">
+  <description>Merge one SBML file or collection with another SBML file</description>
+  <requirements>
+    <requirement type="package">rptools</requirement>
+  </requirements>
+  <command detect_errors="exit_code"><![CDATA[
+    python3 '$__tool_directory__/run.py' -sourcefile '$input_type.input' -input_format '$input_type.input_format' -target_sbml '$target_sbml' -output '$output'
+  ]]></command>
+  <inputs>
+		<conditional name="input_type">
+			<param name="input_format" type="select" label="Input/output format">
+				<option value="sbml" >Single File</option>
+        <option value="tar" selected="True">Collection</option>
+			</param>
+			<when value="tar">
+				<param name="input" type="data" format="tar" label="Source SBML" />
+			</when>
+			<when value="sbml">
+				<param name="input" type="data" format="sbml" label="Source SBML" />
+			</when>
+		</conditional>
+		<param name="target_sbml" type="data" format="sbml" label="Target SBML" />
+  </inputs>
+  <outputs>
+    <data name="output" format="tar" label="Merged SBML">
+      <change_format>
+        <when input="input_type.input_format" value="sbml" format="sbml"/>
+      </change_format>
+    </data>
+  </outputs>
+  <help><![CDATA[
+
+Sink from SBML
+=================
+
+Sink refers to the collection of chemical species used by the restrosynthesis algorithm of RetroPath2.0 to finish metabolic route exploration. This tool uses an SBML file of the desired chassis organism, parses all the molecules within a specified compartment (example: cytoplasm, Golgi apparatus, nucleus, etc) and uses its MIRIAM annotation to find their InChI structures. You can use "Remove dead-end metabolites using FVA evaluation? to conduct Flux Variability Analysis to remove metabolites that lack the requisite flux that would account for their production or consumption within the metabolic network.
+
+In the advanced options, one can specify the compartment from which the tool will extract the chemical species. The default is MNXC3, the MetaNetX code for the cytoplasm. If the user wishes to upload an SBML file from another source, then this value must be changed.
+
+The results are written to a RetroPath2.0 friendly CSV file format that can be used as sink input.
+
+
+Input
+-----
+|
+
+Required:
+
+* **input_sbml**\ : (string) Path to the input SBML file
+
+Advanced options:
+
+* **remove_dead_end**\ : (boolean, default: True) Perform FVA evaluation to remove dead end metabolites
+* **compartment_id**\ : (string, default: MNXC3) Specify the compartment from which to extract the sink molecules. The default are for MetaNetX files
+
+Output
+------
+
+* **output_sink**\ : (string) Path to the output csv file
+
+
+Project Links
+---------------------
+
+* `GitHub <https://github.com/Galaxy-SynBioCAD/rpExtractSink>`_
+
+Version
+----------
+
+1.0
+
+
+Dependencies
+-------------
+
+* `libSBML <http://sbml.org/Software/libSBML>`_
+* `cobrapy <https://opencobra.github.io/cobrapy>`_
+
+Authors
+-------
+
+
+* **Melchior du Lac**
+* Joan Hérisson
+
+License
+-------
+
+`MIT <https://raw.githubusercontent.com/Galaxy-SynBioCAD/rpExtractSink/standalone-dev/LICENSE>`_
+
+Acknowledgments
+---------------
+
+
+* Thomas Duigou
+
+
+
+]]></help>
+  <citations>
+    <citation type="bibtex">
+@article{le2005minimum,
+  title={Minimum information requested in the annotation of biochemical models (MIRIAM)},
+  author={Le Nov{\`e}re, Nicolas and Finney, Andrew and Hucka, Michael and Bhalla, Upinder S and Campagne, Fabien and Collado-Vides, Julio and Crampin, Edmund J and Halstead, Matt and Klipp, Edda and Mendes, Pedro and others},
+  journal={Nature biotechnology},
+  volume={23},
+  number={12},
+  pages={1509--1515},
+  year={2005},
+  publisher={Nature Publishing Group}
+}
+    </citation>
+    <citation type="bibtex">
+@article{delepine2018retropath2,
+  title={RetroPath2. 0: a retrosynthesis workflow for metabolic engineers},
+  author={Del{\'e}pine, Baudoin and Duigou, Thomas and Carbonell, Pablo and Faulon, Jean-Loup},
+  journal={Metabolic engineering},
+  volume={45},
+  pages={158--170},
+  year={2018},
+  publisher={Elsevier}}
+    </citation>
+    <citation type="bibtex">
+@article{ebrahim2013cobrapy,
+  title={COBRApy: COnstraints-based reconstruction and analysis for python},
+  author={Ebrahim, Ali and Lerman, Joshua A and Palsson, Bernhard O and Hyduke, Daniel R},
+  journal={BMC systems biology},
+  volume={7},
+  number={1},
+  pages={74},
+  year={2013},
+  publisher={Springer}
+}
+    </citation>
+    <citation type="bibtex">
+@article{bornstein2008libsbml,
+  title={LibSBML: an API library for SBML},
+  author={Bornstein, Benjamin J and Keating, Sarah M and Jouraku, Akiya and Hucka, Michael},
+  journal={Bioinformatics},
+  volume={24},
+  number={6},
+  pages={880--881},
+  year={2008},
+  publisher={Oxford University Press}
+}
+    </citation>
+  </citations>
+</tool>
