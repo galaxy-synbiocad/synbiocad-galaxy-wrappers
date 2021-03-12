@@ -32,9 +32,11 @@
       <param name="lower_flux_bound" type="integer" value="0" label="Lower flux bound" />
     </section>
   </inputs>
+  <outputs>
     <collection name="list_output" type="list" label="${tool.name}">
       <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" ext="xml" directory="completed_pathways" visible="false" />
     </collection>
+  </outputs>
   <!-- <outputs>
     <data name="output" format="tar.gz" label="${tool.name}" />
   </outputs> -->
