@@ -1,0 +1,84 @@
+<tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.1.0">
+  <description>Build DNA-BOT input files from rpSBML</description>
+  <requirements>
+    <requirement type="package" version="0.1.0">rpbasicdesign</requirement>
+  </requirements>
+  <command detect_errors="exit_code"><![CDATA[
+      python -m rpbasicdesign.cli \
+          --rpsbml_file '$input1' \
+          --o_dnabot_dir '$output1'
+  ]]></command>
+  <inputs>
+    <param type="data" name="input1" format="xml" />
+  </inputs>
+  <outputs>
+    <data name="output1" format="data" />
+  </outputs>
+  <help><![CDATA[
+        usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
+                             [--linker_parts_file LINKER_PARTS_FILE]
+                             [--linker_plate_file LINKER_PLATE_FILE]
+                             [--user_parts_file USER_PARTS_FILE]
+                             [--monocistronic MONOCISTRONIC] [--lms_id LMS_ID]
+                             [--lmp_id LMP_ID] [--backbone_id BACKBONE_ID]
+                             [--sample_size SAMPLE_SIZE]
+                             [--o_dnabot_dir O_DNABOT_DIR]
+                             [--o_sbol_dir O_SBOL_DIR]
+
+Convert rpSBML enzyme info in to BASIC construct. UniProt IDs corresponding
+enzyme variants are extracted from rpSBMl files. Promoters and RBSs are
+randomly chosen from a default list. CDSs, in other words gene variants, of
+enzymes are randomly chosen from amongst the UniProt IDs extracted. Constructs
+generated can be stored as (i) a CSV file ready to be used by DNA-Bot, (ii) as
+SBOL files.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --rpsbml_file RPSBML_FILE
+                        rpSBML file from which enzymes UniProt IDs will be
+                        collected
+  --linker_parts_file LINKER_PARTS_FILE
+                        File listing available linkers for constructs.
+  --linker_plate_file LINKER_PLATE_FILE
+                        File providing half linkers coordinates.
+  --user_parts_file USER_PARTS_FILE
+                        File listing user parts (eg backbone, promoters)
+                        available for constructs.
+  --monocistronic MONOCISTRONIC
+                        Build monocistronic constructs. Default to false, ie
+                        polycistronic constructs will be generated.
+  --lms_id LMS_ID       part ID to be used as the LMS methylated linker
+  --lmp_id LMP_ID       part ID to be used as the LMP methylated linker
+  --backbone_id BACKBONE_ID
+                        part ID to be used as the backbone
+  --sample_size SAMPLE_SIZE
+                        Number of construct to generate.
+  --o_dnabot_dir O_DNABOT_DIR
+                        Output folder to write construct and coord part files.
+                        It will be created if it does not exist yet. Existing
+                        files will be overwritten. Default: out/dnabot_in
+  --o_sbol_dir O_SBOL_DIR
+                        Output folder to write SBOL depictions of constructs.
+                        It will be created if it does not exist yet. Existing
+                        files will be overwritten. Default: out/sbol_export
+
+  ]]></help>
+  <citations>
+    <citation type="bibtex">
+      @article{10.1093/synbio/ysaa010,
+          author = {Storch, Marko and Haines, Matthew C and Baldwin, Geoff S},
+          title = {DNA-BOT: a low-cost, automated DNA assembly platform for synthetic biology},
+          journal = {Synthetic Biology},
+          volume = {5},
+          number = {1},
+          year = {2020},
+          month = {07},
+          issn = {2397-7000},
+          doi = {10.1093/synbio/ysaa010},
+          url = {https://doi.org/10.1093/synbio/ysaa010},
+          note = {ysaa010},
+          eprint = {https://academic.oup.com/synbio/article-pdf/5/1/ysaa010/33722340/ysaa010.pdf},
+      }
+    </citation>
+  </citations>
+</tool>

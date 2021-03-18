@@ -1,0 +1,3 @@
+  <section id="sbc-util" name="SynBioCAD Utilities">
+    <tool file="BRSynthTools/rpbasicdesign-wrapper/wrap.xml" />
+  </section>
