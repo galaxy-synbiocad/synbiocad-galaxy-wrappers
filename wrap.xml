@@ -4,15 +4,23 @@
     <requirement type="package" version="0.1.0">rpbasicdesign</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
-      python -m rpbasicdesign.cli \
-          --rpsbml_file '$input1' \
-          --o_dnabot_dir '$output1'
+      python -m rpbasicdesign.cli
+	  --rpsbml_file '$rpsbml_file'
+	  --o_dnabot_dir 'out/dnabot_in'
   ]]></command>
   <inputs>
-    <param type="data" name="input1" format="xml" />
+    <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
   </inputs>
   <outputs>
-    <data name="output1" format="data" />
+    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">
+      <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
+      <data name="Linker parts" format="csv" from_work_dir="out/dnabot_in/linker_part_coords.csv" />
+      <data name="User parts" format="csv" from_work_dir="out/dnabot_in/user_part_coords.csv" />
+    </collection>
+<!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
+<!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
+<!--    </collection>-->
+    <data  name="output directory" format="directory" />
   </outputs>
   <help><![CDATA[
         usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
