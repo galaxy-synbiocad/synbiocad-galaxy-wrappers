@@ -10,6 +10,8 @@
   ]]></command>
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
+    <section name="adv" title="Advanced Options" expanded="false">
+    </section>
   </inputs>
   <outputs>
     <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">
