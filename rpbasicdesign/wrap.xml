@@ -6,11 +6,17 @@
   <command detect_errors="exit_code"><![CDATA[
       python -m rpbasicdesign.cli
 	  --rpsbml_file '$rpsbml_file'
+    --linker_parts_file '$adv.linker_parts_file'
+    --linker_plate_file '$adv.linker_plate_file'
+    --user_parts_file '$adv.user_parts_file'
 	  --o_dnabot_dir 'out/dnabot_in'
   ]]></command>
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
     <section name="adv" title="Advanced Options" expanded="false">
+      <param type="data" name="linker_parts_file" label="linker parts file" format="csv" />
+      <param type="data" name="linker_plate_file" label="linker plate file" format="csv" />
+      <param type="data" name="user_parts_file" label="user parts file" format="csv" />
     </section>
   </inputs>
   <outputs>
