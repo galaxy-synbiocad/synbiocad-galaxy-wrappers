@@ -32,6 +32,7 @@
       <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
       <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
       <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
+      <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
     </section>
   </inputs>
   <outputs>
