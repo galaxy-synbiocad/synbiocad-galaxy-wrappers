@@ -9,6 +9,11 @@
     --linker_parts_file '$adv.linker_parts_file'
     --linker_plate_file '$adv.linker_plate_file'
     --user_parts_file '$adv.user_parts_file'
+    #if str($adv.construct_type) == "monocistronic":
+      --monocistronic true
+    #else
+      --monocistronic false
+    #end if
 	  --o_dnabot_dir 'out/dnabot_in'
   ]]></command>
   <inputs>
@@ -17,6 +22,10 @@
       <param type="data" name="linker_parts_file" label="linker parts file" format="csv" />
       <param type="data" name="linker_plate_file" label="linker plate file" format="csv" />
       <param type="data" name="user_parts_file" label="user parts file" format="csv" />
+      <param name="construct_type" type="select" label="Construct type">
+        <option value="monocistronic" type="text" >monocistronic</option>
+        <option value="polycistronic" type="text" selected="true">polycistronic</option>
+      </param>
     </section>
   </inputs>
   <outputs>
