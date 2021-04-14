@@ -1,7 +1,7 @@
 <tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.1.0">
   <description>Build DNA-BOT input files from rpSBML</description>
   <requirements>
-    <requirement type="package" version="0.1.0">rpbasicdesign</requirement>
+    <requirement type="package" version="0.1.1">rpbasicdesign</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
       python -m rpbasicdesign.cli
