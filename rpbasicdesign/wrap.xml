@@ -19,6 +19,7 @@
     --backbone_id '$adv.backbone_id'
     --sample_size '$adv.sample_size'
 	  --o_dnabot_dir 'out/dnabot_in'
+    --o_sbol_dir 'out/sbol_export'
   ]]></command>
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
@@ -41,6 +42,11 @@
       <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
       <data name="Linker parts" format="csv" from_work_dir="out/dnabot_in/linker_part_coords.csv" />
       <data name="User parts" format="csv" from_work_dir="out/dnabot_in/user_part_coords.csv" />
+    </collection>
+    <collection type="list" format="xml" name="sbol_dir" label="SBOL depictions of constructs">
+      <data name="Construct_A1" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A1.xml" />
+      <data name="Construct_A2" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A2.xml" />
+      <data name="Construct_A3" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A3.xml" />
     </collection>
 <!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
 <!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
