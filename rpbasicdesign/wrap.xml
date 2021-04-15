@@ -24,9 +24,9 @@
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
     <section name="adv" title="Advanced Options" expanded="false">
-      <param type="data" name="linker_parts_file" label="linker parts file" format="csv" />
-      <param type="data" name="linker_plate_file" label="linker plate file" format="csv" />
-      <param type="data" name="user_parts_file" label="user parts file" format="csv" />
+      <param type="data" name="linker_parts_file" optional="true" label="linker parts file" format="csv" />
+      <param type="data" name="linker_plate_file" optional="true" label="linker plate file" format="csv" />
+      <param type="data" name="user_parts_file" optional="true" label="user parts file" format="csv" />
       <param name="construct_type" type="select" label="Construct type">
         <option value="monocistronic" type="text" >monocistronic</option>
         <option value="polycistronic" type="text" selected="true">polycistronic</option>
