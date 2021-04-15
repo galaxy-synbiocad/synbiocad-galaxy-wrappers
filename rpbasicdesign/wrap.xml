@@ -30,9 +30,9 @@
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
     <section name="adv" title="Advanced Options" expanded="false">
-      <param type="data" name="linker_parts_file" optional="true" label="linker parts file" format="csv" />
-      <param type="data" name="linker_plate_file" optional="true" label="linker plate file" format="csv" />
-      <param type="data" name="user_parts_file" optional="true" label="user parts file" format="csv" />
+      <param type="data" name="linker_parts_file" optional="true" label="Linker parts file" format="csv" />
+      <param type="data" name="linker_plate_file" optional="true" label="Linker plate file" format="csv" />
+      <param type="data" name="user_parts_file" optional="true" label="User parts file" format="csv" />
       <param name="construct_type" type="select" label="Construct type">
         <option value="monocistronic" type="text" >monocistronic</option>
         <option value="polycistronic" type="text" selected="true">polycistronic</option>
@@ -46,8 +46,8 @@
   <outputs>
     <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">
       <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
-      <data name="Linker parts" format="csv" from_work_dir="out/dnabot_in/linker_part_coords.csv" />
-      <data name="User parts" format="csv" from_work_dir="out/dnabot_in/user_part_coords.csv" />
+      <data name="Linker parts coords" format="csv" from_work_dir="out/dnabot_in/linker_parts_coords.csv" />
+      <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
     </collection>
     <collection type="list" format="xml" name="sbol_dir" label="SBOL depictions of constructs">
       <data name="Construct_A1" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A1.xml" />
