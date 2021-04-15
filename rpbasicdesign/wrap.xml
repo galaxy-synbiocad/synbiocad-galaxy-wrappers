@@ -17,6 +17,7 @@
     --lms_id '$adv.lms_id'
     --lmp_id '$adv.lmp_id'
     --backbone_id '$adv.backbone_id'
+    --sample_size '$adv.sample_size'
 	  --o_dnabot_dir 'out/dnabot_in'
   ]]></command>
   <inputs>
