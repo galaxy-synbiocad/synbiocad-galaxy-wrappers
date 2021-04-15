@@ -6,9 +6,15 @@
   <command detect_errors="exit_code"><![CDATA[
       python -m rpbasicdesign.cli
 	  --rpsbml_file '$rpsbml_file'
-    --linker_parts_file '$adv.linker_parts_file'
-    --linker_plate_file '$adv.linker_plate_file'
-    --user_parts_file '$adv.user_parts_file'
+    #if $adv.linker_parts_file
+      --linker_parts_file '$adv.linker_parts_file'
+    #end if
+    #if $adv.linker_plate_file
+      --linker_plate_file '$adv.linker_plate_file'
+    #end if
+    #if $adv.user_parts_file
+      --user_parts_file '$adv.user_parts_file'
+    #end if
     #if str($adv.construct_type) == "monocistronic":
       --monocistronic true
     #else
