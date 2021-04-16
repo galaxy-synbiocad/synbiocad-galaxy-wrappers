@@ -29,18 +29,18 @@
   ]]></command>
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
+    <param name="construct_type" type="select" label="Construct type">
+      <option value="monocistronic" type="text" >monocistronic</option>
+      <option value="polycistronic" type="text" selected="true">polycistronic</option>
+    </param>
+    <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
+    <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
     <section name="adv" title="Advanced Options" expanded="false">
       <param type="data" name="linker_parts_file" optional="true" label="Linker parts file" format="csv" />
       <param type="data" name="linker_plate_file" optional="true" label="Linker plate file" format="csv" />
       <param type="data" name="user_parts_file" optional="true" label="User parts file" format="csv" />
-      <param name="construct_type" type="select" label="Construct type">
-        <option value="monocistronic" type="text" >monocistronic</option>
-        <option value="polycistronic" type="text" selected="true">polycistronic</option>
-      </param>
       <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
       <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
-      <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
-      <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
     </section>
   </inputs>
   <outputs>
