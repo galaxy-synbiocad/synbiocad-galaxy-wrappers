@@ -49,15 +49,12 @@
       <data name="Linker parts coords" format="csv" from_work_dir="out/dnabot_in/linker_parts_coords.csv" />
       <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
     </collection>
-    <collection type="list" format="xml" name="sbol_dir" label="SBOL depictions of constructs">
-      <data name="Construct_A1" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A1.xml" />
-      <data name="Construct_A2" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A2.xml" />
-      <data name="Construct_A3" format="xml" from_work_dir="out/sbol_export/BASIC_construct_A3.xml" />
+    <collection type="list" label="SBOL constructs" name="sbol_dir" format="xml">
+      <discover_datasets pattern="__designation_and_ext__" directory="out/sbol_export" />
     </collection>
 <!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
 <!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
 <!--    </collection>-->
-    <data  name="output directory" format="directory" />
   </outputs>
   <help><![CDATA[
         usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
