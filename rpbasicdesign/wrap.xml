@@ -15,15 +15,15 @@
     #if $adv.user_parts_file
       --user_parts_file '$adv.user_parts_file'
     #end if
-    #if str($adv.construct_type) == "monocistronic":
+    #if str($construct_type) == "monocistronic":
       --monocistronic true
     #else
       --monocistronic false
     #end if
     --lms_id '$adv.lms_id'
     --lmp_id '$adv.lmp_id'
-    --backbone_id '$adv.backbone_id'
-    --sample_size '$adv.sample_size'
+    --backbone_id '$backbone_id'
+    --sample_size '$sample_size'
 	  --o_dnabot_dir 'out/dnabot_in'
     --o_sbol_dir 'out/sbol_export'
   ]]></command>
