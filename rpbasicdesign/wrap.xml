@@ -50,7 +50,7 @@
       <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
     </collection>
     <collection type="list" label="SBOL constructs" name="sbol_dir" format="xml">
-      <discover_datasets pattern="__designation_and_ext__" directory="out/sbol_export" />
+      <discover_datasets pattern="__designation__" directory="out/sbol_export" />
     </collection>
 <!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
 <!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
