@@ -1,26 +1,60 @@
 <tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.1.0">
   <description>Build DNA-BOT input files from rpSBML</description>
   <requirements>
-    <requirement type="package" version="0.1.0">rpbasicdesign</requirement>
+    <requirement type="package" version="0.1.1">rpbasicdesign</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
       python -m rpbasicdesign.cli
 	  --rpsbml_file '$rpsbml_file'
+    #if $adv.linker_parts_file
+      --linker_parts_file '$adv.linker_parts_file'
+    #end if
+    #if $adv.linker_plate_file
+      --linker_plate_file '$adv.linker_plate_file'
+    #end if
+    #if $adv.user_parts_file
+      --user_parts_file '$adv.user_parts_file'
+    #end if
+    #if str($construct_type) == "monocistronic":
+      --monocistronic true
+    #else
+      --monocistronic false
+    #end if
+    --lms_id '$adv.lms_id'
+    --lmp_id '$adv.lmp_id'
+    --backbone_id '$backbone_id'
+    --sample_size '$sample_size'
 	  --o_dnabot_dir 'out/dnabot_in'
+    --o_sbol_dir 'out/sbol_export'
   ]]></command>
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
+    <param name="construct_type" type="select" label="Construct type">
+      <option value="monocistronic" type="text" >monocistronic</option>
+      <option value="polycistronic" type="text" selected="true">polycistronic</option>
+    </param>
+    <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
+    <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
+    <section name="adv" title="Advanced Options" expanded="false">
+      <param type="data" name="linker_parts_file" optional="true" label="Linker parts file" format="csv" />
+      <param type="data" name="linker_plate_file" optional="true" label="Linker plate file" format="csv" />
+      <param type="data" name="user_parts_file" optional="true" label="User parts file" format="csv" />
+      <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
+      <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
+    </section>
   </inputs>
   <outputs>
     <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">
       <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
-      <data name="Linker parts" format="csv" from_work_dir="out/dnabot_in/linker_part_coords.csv" />
-      <data name="User parts" format="csv" from_work_dir="out/dnabot_in/user_part_coords.csv" />
+      <data name="Linker parts coords" format="csv" from_work_dir="out/dnabot_in/linker_parts_coords.csv" />
+      <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
+    </collection>
+    <collection type="list" label="SBOL constructs" name="sbol_dir" format="xml">
+      <discover_datasets pattern="__designation__" directory="out/sbol_export" />
     </collection>
 <!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
 <!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
 <!--    </collection>-->
-    <data  name="output directory" format="directory" />
   </outputs>
   <help><![CDATA[
         usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
