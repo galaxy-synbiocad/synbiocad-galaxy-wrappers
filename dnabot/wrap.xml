@@ -1,0 +1,76 @@
+<tool id="dnabot" name="DNA assembly" version="0.0.0">
+  <description>DNA assembly using BASIC on OpenTrons</description>
+  <requirements>
+    <requirement type="package" version="v1.0.0">dnabot</requirement>
+  </requirements>
+  <command detect_errors="exit_code"><![CDATA[
+      python dnabot/dnabot_app.py nogui
+      --construct_path '$construct_file'
+      --source_paths '$linker_parts_file' '$user_parts_file'
+      --etoh_well '$etoh_well'
+      --soc_column '$soc_column'
+      --output_dir 'output'
+  ]]></command>
+  <inputs>
+    <param type="data" name="construct_file" label="Source Construct" format="csv" />
+    <param type="data" name="linker_parts_file" label="Linker parts source" format="csv" />
+    <param type="data" name="user_parts_file" label="User parts source" format="csv" />
+    <param name="etoh_well" type="select" label="Well coordinate for Ethanol">
+      <option value="A2" type="text" >A2</option>
+      <option value="A3" type="text" >A3</option>
+      <option value="A4" type="text" >A4</option>
+      <option value="A5" type="text" >A5</option>
+      <option value="A6" type="text" >A6</option>
+      <option value="A7" type="text" >A7</option>
+      <option value="A8" type="text" >A8</option>
+      <option value="A9" type="text" >A9</option>
+      <option value="A10" type="text" >A10</option>
+      <option value="A11" type="text" selected="true">A11</option>
+    </param>
+    <param name="soc_column" type="select" label="Column coordinate for SOC">
+      <option value="1" type="integer" selected="true">1</option>
+      <option value="2" type="integer" >2</option>
+      <option value="3" type="integer" >3</option>
+      <option value="4" type="integer" >4</option>
+      <option value="5" type="integer" >5</option>
+      <option value="6" type="integer" >6</option>
+      <option value="7" type="integer" >7</option>
+      <option value="8" type="integer" >8</option>
+      <option value="9" type="integer" >9</option>
+      <option value="10" type="integer" >10</option>
+      <option value="11" type="integer" >11</option>
+      <option value="12" type="integer" >12</option>
+    </param>
+
+  </inputs>
+  <outputs>
+    <collection type="list" label="dnabot output" name="output" format="xml">
+      <discover_datasets pattern="__designation__" directory="output" />
+    </collection>
+  </outputs>
+
+  <help><![CDATA[
+          usage: python dnabot_app.py nogui [-h] --construct_path CONSTRUCT_PATH
+                             [--source_paths [SOURCE_PATHS ...]]
+                             [--etoh_well ETOH_WELL]
+                             [--soc_column SOC_COLUMN]
+                             [--output_dir OUTPUT_DIR]
+                             [--template_dir TEMPLATE_DIR]
+  optional arguments:
+  -h, --help            show this help message and exit
+  --construct_path CONSTRUCT_PATH
+                         Construct CSV file.
+  --source_paths SOURCE_PATHS [SOURCE_PATHS ...]
+                         Source CSV files.
+  --etoh_well ETOH_WELL
+                         Well coordinate for Ethanol. Default: A11
+  --soc_column SOC_COLUMN
+                         Column coordinate for SOC. Default: 1
+  --output_dir OUTPUT_DIR
+                         Output directory. Default: same directory than the one
+                         containing the "construct_path" file
+  --template_dir TEMPLATE_DIR
+                         Template directory. Default: "template_ot2_scripts"
+                         located next to the present script.
+  ]]></help>
+</tool>
