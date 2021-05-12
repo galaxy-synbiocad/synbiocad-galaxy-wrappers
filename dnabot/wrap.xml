@@ -74,4 +74,22 @@ optional arguments:
   --output_dir OUTPUT_DIR       Output directory. Default: same directory than the one containing the "construct_path" file
   --template_dir TEMPLATE_DIR       Template directory. Default: "template_ot2_scripts" located next to the present script.
   ]]></help>
+  <citations>
+    <citation type="bibtex">
+      @article{10.1093/synbio/ysaa010,
+          author = {Storch, Marko and Haines, Matthew C and Baldwin, Geoff S},
+          title = {DNA-BOT: a low-cost, automated DNA assembly platform for synthetic biology},
+          journal = {Synthetic Biology},
+          volume = {5},
+          number = {1},
+          year = {2020},
+          month = {07},
+          issn = {2397-7000},
+          doi = {10.1093/synbio/ysaa010},
+          url = {https://doi.org/10.1093/synbio/ysaa010},
+          note = {ysaa010},
+          eprint = {https://academic.oup.com/synbio/article-pdf/5/1/ysaa010/33722340/ysaa010.pdf},
+      }
+    </citation>
+  </citations>
 </tool>
