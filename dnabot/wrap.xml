@@ -44,17 +44,13 @@
 
   </inputs>
   <outputs>
-    <collection type="list" label="DNA-BOT scripts" name="output">
-      <discover_datasets pattern="__designation__" directory="output" recurse="true"/>
+    <collection type="list" label="DNA-BOT scripts" name="output1">
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.py" format="txt" directory="output"/>
     </collection>
-  <!--
-    <collection type="list" name="output" label="DNA-BOT scripts">
-      <data name="Clip script" from_work_dir="output/1_clip.ot2.py" />
-      <data name="Purification script" from_work_dir="output/2_purification.ot2.py" />
-      <data name="Assembly script" from_work_dir="output/3_assembly.ot2.py" />
-      <data name="Transformation script" from_work_dir="output/4_transformation.ot2.py" />
+    <collection type="list" label="Metainformation" name="output2">
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" format="csv" directory="output/metainformation"/>
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt" format="txt" directory="output/metainformation"/>
     </collection>
-  -->
   </outputs>
 
   <help><![CDATA[
