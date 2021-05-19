@@ -1,18 +1,22 @@
-<tool id="rpviz" name="Visualize pathways from the RetroPath Suite" version="0.0.0">
+<tool id="rpviz" name="Visualize pathways" version="0.0.0">
   <description>Visualize pathways from the RetroPath Suite</description>
   <requirements>
     <requirement type="package" version="0.1.0">rpviz</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
-      python -m rpviz.cli
-	   '$rpsbml_input' 'output'
+    mkdir -p '/galaxy/database/files/input_folder';
+    #for $input in $rpsbml_collection.keys()
+      ln -sfn $rpsbml_collection[$input] '/galaxy/database/files/input_folder/$input';
+    #end for
+    python -m rpviz.cli '/galaxy/database/files/input_folder/' 'output'
   ]]></command>
   <inputs>
-    <param type="data" name="rpsbml_input" label="Source SBML" format="tar" />
+    <param name="rpsbml_collection" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
   </inputs>
   <outputs>
-    <collection type="list" label="Pathways Visualization" name="output" format="xml">
-      <discover_datasets pattern="__designation__" directory="output" />
+    <collection type="list" label="Pathways Visualization" name="output">
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.html" format="html" directory="output"/>
+      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.json" format="json" directory="output"/>
     </collection>
   </outputs>
 <help><![CDATA[
