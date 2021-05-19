@@ -1,19 +1,14 @@
-<tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.1.0">
+<tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.2.0">
   <description>Build DNA-BOT input files from rpSBML</description>
   <requirements>
-    <requirement type="package" version="0.1.1">rpbasicdesign</requirement>
+    <requirement type="package" version="0.2.2">rpbasicdesign</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
       python -m rpbasicdesign.cli
 	  --rpsbml_file '$rpsbml_file'
-    #if $adv.linker_parts_file
-      --linker_parts_file '$adv.linker_parts_file'
-    #end if
-    #if $adv.linker_plate_file
-      --linker_plate_file '$adv.linker_plate_file'
-    #end if
-    #if $adv.user_parts_file
-      --user_parts_file '$adv.user_parts_file'
+    #if $adv.parts_files
+      #set files = '" "'.join([str($file) for $file in $adv.parts_files])
+      --parts_files "${files}"
     #end if
     #if str($construct_type) == "monocistronic":
       --monocistronic true
@@ -30,37 +25,31 @@
   <inputs>
     <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
     <param name="construct_type" type="select" label="Construct type">
-      <option value="monocistronic" type="text" >monocistronic</option>
-      <option value="polycistronic" type="text" selected="true">polycistronic</option>
+      <option value="monocistronic" >monocistronic</option>
+      <option value="polycistronic" selected="true">polycistronic</option>
     </param>
     <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
     <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
     <section name="adv" title="Advanced Options" expanded="false">
-      <param type="data" name="linker_parts_file" optional="true" label="Linker parts file" format="csv" />
-      <param type="data" name="linker_plate_file" optional="true" label="Linker plate file" format="csv" />
-      <param type="data" name="user_parts_file" optional="true" label="User parts file" format="csv" />
+      <param type="data" name="parts_files" optional="true" label="Linkers and user parts" multiple="true" format="csv" />
       <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
       <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
     </section>
   </inputs>
   <outputs>
-    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">
+    <collection type="list" name="dnabot_dir" label="Dataset for DNA-BOT">
       <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
-      <data name="Linker parts coords" format="csv" from_work_dir="out/dnabot_in/linker_parts_coords.csv" />
       <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
     </collection>
-    <collection type="list" label="SBOL constructs" name="sbol_dir" format="xml">
-      <discover_datasets pattern="__designation__" directory="out/sbol_export" />
+    <collection type="list" label="SBOL constructs" name="sbol_dir">
+      <discover_datasets pattern="__designation__" format="xml" directory="out/sbol_export" />
     </collection>
-<!--    <collection type="list" format="csv" name="dnabot_dir" label="Dataset for DNA-BOT">-->
-<!--      <discover_datasets pattern="__name_and_ext__" directory="out/dnabot_in" ext="csv" />-->
-<!--    </collection>-->
   </outputs>
   <help><![CDATA[
         usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
-                             [--linker_parts_file LINKER_PARTS_FILE]
-                             [--linker_plate_file LINKER_PLATE_FILE]
-                             [--user_parts_file USER_PARTS_FILE]
+
+                             [--parts_files PARTS_FILES [PARTS_FILES ...]]
+
                              [--monocistronic MONOCISTRONIC] [--lms_id LMS_ID]
                              [--lmp_id LMP_ID] [--backbone_id BACKBONE_ID]
                              [--sample_size SAMPLE_SIZE]
@@ -79,13 +68,11 @@ optional arguments:
   --rpsbml_file RPSBML_FILE
                         rpSBML file from which enzymes UniProt IDs will be
                         collected
-  --linker_parts_file LINKER_PARTS_FILE
-                        File listing available linkers for constructs.
-  --linker_plate_file LINKER_PLATE_FILE
-                        File providing half linkers coordinates.
-  --user_parts_file USER_PARTS_FILE
-                        File listing user parts (eg backbone, promoters)
-                        available for constructs.
+
+  --parts_files PARTS_FILES [PARTS_FILES ...]
+                        List of files providing available linkers and user
+                        parts (backbone, promoters, ...) for constructs.
+
   --monocistronic MONOCISTRONIC
                         Build monocistronic constructs. Default to false, ie
                         polycistronic constructs will be generated.
