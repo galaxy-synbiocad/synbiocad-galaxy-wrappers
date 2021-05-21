@@ -4,20 +4,19 @@
     <requirement type="package" version="0.1.0">rpviz</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
-    mkdir -p '/galaxy/database/files/input_folder';
+    cd /tmp &&
+    #set input_folder="input_folder"
+    mkdir -p '$input_folder' &&
     #for $input in $rpsbml_collection.keys()
-      ln -sfn $rpsbml_collection[$input] '/galaxy/database/files/input_folder/$input';
+      ln -sfn $rpsbml_collection[$input] '$input_folder/$input';
     #end for
-    python -m rpviz.cli '/galaxy/database/files/input_folder/' 'output'
+    python -m rpviz.cli $input_folder 'out' --autonomous_html '$html_file';
   ]]></command>
   <inputs>
     <param name="rpsbml_collection" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
   </inputs>
   <outputs>
-    <collection type="list" label="Pathways Visualization" name="output">
-      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.html" format="html" directory="output"/>
-      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.json" format="json" directory="output"/>
-    </collection>
+    <data format="html" name="html_file" label="Pathways Visualization"/>
   </outputs>
 <help><![CDATA[
         usage: python -m rpviz.cli [-h] input_rpSBMLs output_folder
