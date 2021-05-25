@@ -4,7 +4,18 @@
     <requirement type="package" version="0.1.0">rpviz</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
-    python -m rpviz.cli '${input_type_conditional.input}' 'out' --autonomous_html '$html_file'
+    #if str($input_type_conditional.input_type) == "sbml":
+      cd /tmp &&
+      #set input_folder="input_folder"
+      mkdir -p '$input_folder' &&
+      #for $input in $input_type_conditional.input_sbml.keys():
+        ln -sfn $input_type_conditional.input_sbml[$input] '$input_folder/$input';
+      #end for
+      python -m rpviz.cli '$input_folder'
+    #elif str($input_type_conditional.input_type) == "tar":
+      python -m rpviz.cli '${input_type_conditional.input_tar}'
+    #end if
+    'out' --autonomous_html '$html_file'
   ]]></command>
   <inputs>
     <conditional name="input_type_conditional">
@@ -13,10 +24,10 @@
         <option value="sbml">Collection</option>
       </param>
       <when value="tar">
-        <param name="input" type="data" format="tar" label="Source SBML" />
+        <param name="input_tar" type="data" format="tar" label="Source SBML" />
       </when>
       <when value="sbml">
-        <param name="input" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
+        <param name="input_sbml" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
       </when>
     </conditional>
   </inputs>
