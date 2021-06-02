@@ -15,7 +15,11 @@
     #elif str($input_type_conditional.input_type) == "tar":
       python -m rpviz.cli '${input_type_conditional.input_tar}'
     #end if
-    'out' --autonomous_html '$html_file'
+    'out'
+    #if $adv.cofactor_file
+      --cofactor '$adv.cofactor_file'
+    #end if
+    --autonomous_html '$html_file'
   ]]></command>
   <inputs>
     <conditional name="input_type_conditional">
@@ -30,6 +34,9 @@
         <param name="input_sbml" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
       </when>
     </conditional>
+    <section name="adv" title="Advanced Options" expanded="false">
+      <param type="data" name="cofactor_file" optional="true" label="cofactor file" format="tsv" />
+    </section>
   </inputs>
   <outputs>
     <data format="html" name="html_file" label="Pathways Visualization"/>
