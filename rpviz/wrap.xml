@@ -34,6 +34,30 @@
   <outputs>
     <data format="html" name="html_file" label="Pathways Visualization"/>
   </outputs>
+  <tests>
+  <test>
+    <!-- test 1: check if identical html output is produced (input collection) --> 
+    <conditional name="input_type_conditional">
+      <param name="input_type" value="sbml"/>
+      <param name="input_sbml">
+        <collection type="list">
+          <element name="file1" value='rpviz/5 - RetroPath_Pathway_3_1_sbml.xml' />
+          <element name="file2" value='rpviz/4 - RetroPath_Pathway_1_1_sbml.xml' />
+          <element name="file3" value='rpviz/1 - RetroPath_Pathway_2_1_sbml.xml' />
+        </collection>
+      </param>
+    </conditional>
+    <output name="html_file" file="rpviz/autonomous.html" compare="diff"/>
+  </test>
+  <test>
+  <!-- test 2: check if identical html output is produced (tar input) --> 
+  <conditional name="input_type_conditional">
+    <param name="input_type" value="tar"/>
+    <param name="input_tar" value="rpviz/as_dir.tar" />
+  </conditional>
+  <output name="html_file" file="rpviz/autonomous.html" compare="diff"/>
+  </test>
+  </tests>
 <help><![CDATA[
         usage: python -m rpviz.cli [-h] input_rpSBMLs output_folder
                              [--debug]
