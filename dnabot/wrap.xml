@@ -1,4 +1,4 @@
-<tool id="dnabot" name="DNA assembly" version="0.0.0">
+<tool id="dnabot" name="DNA assembly" version="0.1.0">
   <description>DNA assembly using BASIC on OpenTrons</description>
   <requirements>
     <requirement type="package" version="v1.0.0">dnabot</requirement>
@@ -43,18 +43,35 @@
         <option value="12" >12</option>
       </param>
     </section>
-
   </inputs>
   <outputs>
     <collection type="list" label="DNA-BOT scripts" name="output1">
       <discover_datasets pattern="(?P&lt;designation&gt;.+)\.py" format="txt" directory="output"/>
     </collection>
     <collection type="list" label="Metainformation" name="output2">
-      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" format="csv" directory="output/metainformation"/>
-      <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt" format="txt" directory="output/metainformation"/>
+      <discover_datasets pattern="dataset_(\d+)?_(?P&lt;designation&gt;.+)" format="csv" directory="output/metainformation"/>
+      <discover_datasets pattern="dataset_(\d+)?_(?P&lt;designation&gt;.+)" format="txt" directory="output/metainformation"/>
     </collection>
   </outputs>
-
+  <tests>
+    <test>
+    <!-- test 1: check if identical outputs are produced with default parameters  -->
+      <param name="construct_file" value="dnabot/constructs.csv" />
+      <param name="linker_parts_file" value="dnabot/linker_parts_coords.csv" />
+      <param name="user_parts_file" value="dnabot/user_parts_coords.csv" />
+      <output_collection name="output1" type="list">
+        <element name="1_clip.ot2" file="dnabot/scripts/1_clip.ot2.py" />
+        <element name="2_purification.ot2" file="dnabot/scripts/2_purification.ot2.py" />
+        <element name="3_assembly.ot2" file="dnabot/scripts/3_assembly.ot2.py" />
+        <element name="4_transformation.ot2" file="dnabot/scripts/4_transformation.ot2.py" />
+      </output_collection>
+      <output_collection name="output2" type="list">
+        <discovered_dataset designation="wells.txt" file="dnabot/Metainformation/constructs_wells.txt" />
+        <discovered_dataset designation="clip_run_info.csv" file="dnabot/Metainformation/constructs_clip_run_info.csv" lines_diff="3" />
+        <discovered_dataset designation="final_assembly_run_info.csv" file="dnabot/Metainformation/constructs_final_assembly_run_info.csv" />
+      </output_collection>
+    </test>
+  </tests>
   <help><![CDATA[
           usage: python -m dnabot.dnabot_app nogui [-h] --construct_path CONSTRUCT_PATH
                             [--source_paths [SOURCE_PATHS ...]]
