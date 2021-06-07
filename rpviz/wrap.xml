@@ -1,0 +1,99 @@
+<tool id="rpviz" name="Visualize pathways" version="0.0.0">
+  <description>Visualize pathways from the RetroPath Suite</description>
+  <requirements>
+    <requirement type="package" version="0.1.1">rpviz</requirement>
+  </requirements>
+  <command detect_errors="exit_code"><![CDATA[
+    #if str($input_type_conditional.input_type) == "sbml":
+      cd /tmp &&
+      #set input_folder="input_folder"
+      mkdir -p '$input_folder' &&
+      #for $input in $input_type_conditional.input_sbml.keys():
+        ln -sfn $input_type_conditional.input_sbml[$input] '$input_folder/$input';
+      #end for
+      python -m rpviz.cli '$input_folder'
+    #elif str($input_type_conditional.input_type) == "tar":
+      python -m rpviz.cli '${input_type_conditional.input_tar}'
+    #end if
+    'out'
+    #if $adv.cofactor_file
+      --cofactor '$adv.cofactor_file'
+    #end if
+    --autonomous_html '$html_file'
+  ]]></command>
+  <inputs>
+    <conditional name="input_type_conditional">
+      <param name="input_type" type="select" label="Source SBML format">
+        <option value="tar" selected="True">TAR</option>
+        <option value="sbml">Collection</option>
+      </param>
+      <when value="tar">
+        <param name="input_tar" type="data" format="tar" label="Source SBML" />
+      </when>
+      <when value="sbml">
+        <param name="input_sbml" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
+      </when>
+    </conditional>
+    <section name="adv" title="Advanced Options" expanded="false">
+      <param type="data" name="cofactor_file" optional="true" label="cofactor file" format="tsv" />
+    </section>
+  </inputs>
+  <outputs>
+    <data format="html" name="html_file" label="Pathways Visualization"/>
+  </outputs>
+  <tests>
+  <test>
+    <!-- test 1: check if identical html output is produced (input collection) --> 
+    <conditional name="input_type_conditional">
+      <param name="input_type" value="sbml"/>
+      <param name="input_sbml">
+        <collection type="list">
+          <element name="file1" value='rpviz/5 - RetroPath_Pathway_3_1_sbml.xml' />
+          <element name="file2" value='rpviz/4 - RetroPath_Pathway_1_1_sbml.xml' />
+          <element name="file3" value='rpviz/1 - RetroPath_Pathway_2_1_sbml.xml' />
+        </collection>
+      </param>
+    </conditional>
+    <output name="html_file" file="rpviz/autonomous.html" compare="diff"/>
+  </test>
+  <test>
+  <!-- test 2: check if identical html output is produced (tar input) --> 
+  <conditional name="input_type_conditional">
+    <param name="input_type" value="tar"/>
+    <param name="input_tar" value="rpviz/as_dir.tar" />
+  </conditional>
+  <output name="html_file" file="rpviz/autonomous.html" compare="diff"/>
+  </test>
+  </tests>
+<help><![CDATA[
+        usage: python -m rpviz.cli [-h] input_rpSBMLs output_folder
+                             [--debug]
+                             [--template_folder TEMPLATE_FOLDER]
+                             [--linker_plate_file LINKER_PLATE_FILE]
+                             [--cofactor COFACTOR]
+                             [--autonomous_html AUTONOMOUS_HTML]
+                             
+Visualize pathways from the RetroPath Suite
+
+positional arguments:
+  input_rpSBMLs         Input file containing rpSBML files in a 
+                        tar archive or a folder.
+  output_folder         Output folder to be used. If it does not 
+                        exist, an attempt will be made to create 
+                        it.It the creation of the folder fails, 
+                        IOError will be raised.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --debug               Turn on debug instructions
+  --template_folder TEMPLATE_FOLDER
+                        Path to the folder containing templates
+  --cofactor COFACTOR   File listing structures to consider as 
+                        cofactors.
+  --autonomous_html AUTONOMOUS_HTML
+                        Optional file path, if provided will 
+                        output an autonomous HTML containing
+                        all dependancies.
+
+  ]]></help>
+</tool>
