@@ -16,9 +16,8 @@ predicted with RetroPath suite</description>
     #elif str($input_type_conditional.input_type) == "tar":
       python -m rptools.rpreport '${input_type_conditional.input_tar}'
     #end if
-    'out'
-    --standalone
-    && cp out/index.html '$html_file'
+    '$html_file.files_path'
+    && cp '$html_file.files_path'/index.html '$html_file'
   ]]></command>
   <inputs>
     <conditional name="input_type_conditional">
