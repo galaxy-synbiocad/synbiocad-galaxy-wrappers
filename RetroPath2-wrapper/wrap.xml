@@ -1,52 +1,52 @@
-<tool id="retropath2" name="RetroPath2.0">
-  <description>Build a reaction network from a set of source compounds to a set of sink compounds</description>
-  <requirements>
-    <requirement type="package">retropath2_wrapper</requirement>
-  </requirements>
-  <stdio>
-    <exit_code range="1" level="error"   description="Source has been found in the sink"                          />
-    <exit_code range="2" level="error"   description="Cannot find source-in-sink file"                            />
-    <exit_code range="3" level="error"   description="Running the RetroPath2.0 Knime program produced an OSError" />
-    <exit_code range="4" level="warning" description="RetroPath2.0 has found no solution"                         />
-    <exit_code range="5" level="warning" description="Time limit reached"                                         />
+<tool id="retropath2" name="RetroPath2.0" version="2.0.0">
+    <description>Build a reaction network from a set of source compounds to a set of sink compounds</description>
+    <requirements>
+        <requirement type="package">retropath2_wrapper</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1" level="fatal"   description="Source has been found in the sink"                          />
+        <exit_code range="2" level="fatal"   description="Cannot find source-in-sink file"                            />
+        <exit_code range="3" level="fatal"   description="Running the RetroPath2.0 Knime program produced an OSError" />
+        <exit_code range="4" level="warning" description="RetroPath2.0 has found no solution"                         />
+        <exit_code range="5" level="warning" description="Time limit reached"                                         />
 	</stdio>
-  <command detect_errors="exit_code"><![CDATA[
-      python -m retropath2_wrapper
-          '$sinkfile'
-          '$rulesfile'
-          out
-          --source_inchi '$source_inchi'
-        #if $source_name:
-          --source_name '$source_name'
-        #end if
-          --max_steps '$max_steps'
-          --topx '$adv.topx'
-          --dmin '$adv.dmin'
-          --dmax '$adv.dmax'
-          --mwmax_source '$adv.mwmax_source'
-          --mwmax_cof '$adv.mwmax_cof'
-          --timeout '$adv.timeout'
-   && cp out/*_scope.csv '$output'
+    <command detect_errors="exit_code"><![CDATA[
+        python -m retropath2_wrapper
+            '$sinkfile'
+            '$rulesfile'
+            out
+            --source_inchi '$source_inchi'
+            #if $source_name:
+                --source_name '$source_name'
+            #end if
+            --max_steps '$max_steps'
+            --topx '$adv.topx'
+            --dmin '$adv.dmin'
+            --dmax '$adv.dmax'
+            --mwmax_source '$adv.mwmax_source'
+            --mwmax_cof '$adv.mwmax_cof'
+            --timeout '$adv.timeout'
+        && cp out/*_scope.csv '$output'
   ]]></command>
-  <inputs>
-    <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
-		<param name="sinkfile"     type="data" format="csv" label="Sink File"              />
-		<param name="source_inchi" type="text"              label="Source InChI"           />
-    <param name="source_name"  type="text" value="target" optional="true" label="Source name"         />
-		<param name="max_steps"    type="integer" value="3" label="Maximal Pathway length" />
-		<section name="adv" title="Advanced Options" expanded="false">
-			<param name="topx"         type="integer" value="100"  label="TopX"                                  />
-			<param name="dmin"         type="integer" value="0"    label="Minimum rule diameter"                 />
-			<param name="dmax"         type="integer" value="1000" label="Maximum rule diameter"                 />
-      <param name="mwmax_source" type="integer" value="1000" label="Molecular weight of source (Da)"       />
-			<param name="mwmax_cof"    type="integer" value="1000" label="Molecular weight of coefficients (Da)" />
-			<param name="timeout"      type="integer" value="30"   label="Timeout (min)"                         />
-		</section>
-  </inputs>
-  <outputs>
-		<data name="output" format="csv" label="${tool.name}" />
-  </outputs>
-  <help><![CDATA[
+    <inputs>
+        <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
+        <param name="sinkfile"     type="data" format="csv" label="Sink File"              />
+        <param name="source_inchi" type="text"              label="Source InChI"           />
+        <param name="source_name"  type="text" value="target" optional="true" label="Source name"         />
+        <param name="max_steps"    type="integer" value="3" label="Maximal Pathway length" />
+        <section name="adv" title="Advanced Options" expanded="false">
+            <param name="topx"         type="integer" value="100"  label="TopX"                                  />
+            <param name="dmin"         type="integer" value="0"    label="Minimum rule diameter"                 />
+            <param name="dmax"         type="integer" value="1000" label="Maximum rule diameter"                 />
+            <param name="mwmax_source" type="integer" value="1000" label="Molecular weight of source (Da)"       />
+            <param name="mwmax_cof"    type="integer" value="1000" label="Molecular weight of coefficients (Da)" />
+            <param name="timeout"      type="integer" value="30"   label="Timeout (min)"                         />
+        </section>
+    </inputs>
+    <outputs>
+	    <data name="output" format="csv" label="${tool.name}" />
+    </outputs>
+    <help><![CDATA[
 Retropath2.0 wrapper
 ====================
 
@@ -104,9 +104,9 @@ Acknowledgments
 
 * Thomas Duigou
 
-]]></help>
-  <citations>
-    <citation type="bibtex">
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
 @article{delepine2018retropath2,
   title={RetroPath2. 0: a retrosynthesis workflow for metabolic engineers},
   author={Del{\'e}pine, Baudoin and Duigou, Thomas and Carbonell, Pablo and Faulon, Jean-Loup},
@@ -115,6 +115,6 @@ Acknowledgments
   pages={158--170},
   year={2018},
   publisher={Elsevier}}
-    </citation>
-  </citations>
+        </citation>
+    </citations>
 </tool>
