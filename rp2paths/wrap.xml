@@ -31,6 +31,14 @@
         <data name="rp2paths_pathways" format="csv" label="${tool.name} Pathways" />
         <data name="rp2paths_compounds" format="tsv" label="${tool.name} Compounds" />
     </outputs>
+    <tests>
+        <test>
+            <!-- test 1: check if identical outputs are produced with default parameters  -->
+            <param name="rp2_pathways" value="results_retropath2.csv" />
+            <output name="rp2paths_pathways" file="rp2paths_pathways.csv" ftype="csv" compare="diff"/>
+            <output name="rp2paths_compounds" file="rp2paths_compounds.tsv" ftype="tsv" compare="diff"/>
+        </test>
+    </tests>
     <help><![CDATA[
 rp2paths
 ========
