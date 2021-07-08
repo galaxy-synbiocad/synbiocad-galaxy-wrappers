@@ -19,7 +19,7 @@
   <inputs>
     <param name="pathway_collection" type="data_collection" collection_type="list" label="Pathways" />
     <section name="adv" title="Advanced Options" expanded="false">
-       <param name="top" type="integer" value="10" label="Number of pathways selected" />
+       <param name="top" type="integer" value="0" label="Number of pathways selected" />
     </section>
   </inputs>
   <outputs>
