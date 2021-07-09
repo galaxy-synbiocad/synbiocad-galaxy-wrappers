@@ -67,7 +67,7 @@
 		<section name="adv" title="Advanced Options" expanded="false">
 			<param name="pathway_id"     type="text"    label="Name of the heterologous pathway"     value="rp_pathway" />
 			<param name="objective_id"   type="text"    label="Overwrite default given objective ID" value="obj_fraction" />
-			<param name="is_max"         type="boolean" label="Maximise the objective?"              truevalue="True" falsevalue="False" checked="true" />
+			<param name="is_max"         type="boolean" label="Maximise the objective?"              checked="true" />
 			<param name="dont_merge"     type="boolean" label="Don't output the merged model?"       checked="true"   display="checkboxes" />
 			<param name="log_level"      type="select"  label="Log level">
                 <option value="debug"    type="text"                >debug</option>
