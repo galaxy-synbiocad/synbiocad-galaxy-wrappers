@@ -1,7 +1,7 @@
-<tool id="rpCompletion" name="Complete Reactions" version="1.0.0">
+<tool id="rpCompletion" name="Complete Reactions" version="5.1.4">
   <description>From the output of RP2Paths and RetroPath2.0, generate SBML unique and complete (with cofactors) pathways with mono-component reactions</description>
   <requirements>
-    <requirement type="package">rptools</requirement>
+    <requirement type="package" version="5.1.4">rptools</requirement>
   </requirements>
   <stdio>
     <exit_code range="1" level="fatal" description="Could not Xref compartment_id" />
@@ -10,10 +10,10 @@
   <command detect_errors="exit_code"><![CDATA[
       python -m rptools.rpcompletion
         '$rp2_pathways'
+        '$sink'
         '$rp2paths_compounds'
         '$rp2paths_pathways'
         completed_pathways
-        --compartment_id '$adv.compartment_id'
         --pathway_id '$adv.pathway_id'
         --species_group_id '$adv.species_group_id'
         --upper_flux_bound '$adv.upper_flux_bound'
@@ -23,9 +23,9 @@
     <param name="rp2paths_pathways" type="data" format="csv" label="RP2paths pathways" />
     <param name="rp2paths_compounds" type="data" format="tsv" label="RP2paths compounds" />
     <param name="rp2_pathways" type="data" format="csv" label="RetroPath2.0 output" />
+    <param name="sink" type="data" format="csv" label="RpExtractSink output" />
     <section name="adv" title="Advanced Options" expanded="false">
       <param name="max_subpaths_filter" type="integer" value="10" label="Max subpaths generated per pathway" />
-      <param name="compartment_id" type="text" value="MNXC3" label="SBML compartment ID" />
       <param name="pathway_id" type="text" value="rp_pathway" label="SBML heterologous pathway ID" />
       <param name="species_group_id" type="text" value="central_species" label="rpSBML Central Species ID" />
       <param name="upper_flux_bound" type="integer" value="999999" label="Upper flux bound" />
@@ -37,9 +37,6 @@
       <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" ext="xml" directory="completed_pathways" visible="false" />
     </collection>
   </outputs>
-  <!-- <outputs>
-    <data name="output" format="tar.gz" label="${tool.name}" />
-  </outputs> -->
   <help><![CDATA[
 rpCompletion
 ============
@@ -51,9 +48,10 @@ Input
 
 Required:
 
-* **-rp2paths_pathways**: (string) Path to the rp2paths pathways file
-* **-rp2paths_compounds**: (string) Path to the rp2paths compounds file
 * **-rp2_pathways**: (string) Path to the RetroPath2.0 pathways file
+* **-sink**: (string) Path to the rpextractsink file containing infos on molecules in the sink
+* **-rp2paths_compounds**: (string) Path to the rp2paths compounds file
+* **-rp2paths_pathways**: (string) Path to the rp2paths pathways file
 
 Advanced options:
 
@@ -61,7 +59,6 @@ Advanced options:
 * **-lower_flux_bound**: (integer, default=0) Lower flux bound value
 * **-max_subpaths_filter**: (integer, default=10, 0=nofilter) Number of subpaths per path
 * **-pathway_id**: (string, default=rp_pathway) ID of the heterologous pathway
-* **-compartment_id**: (string, default=MNXC3 (i.e. cytoplasm)) Heterologous pathway compartment ID
 * **-species_group_id**: (string, default=central_species) ID of the central species, i.e. not cofactors, in the heterologous reactions
 * **-sm**: (optional, string, default: file) Store mode. If 'file', rpCache is supposed to be stored in files. Else, the rpCache is supposed to be stored in a Redis database which the name is the value of this input field.
 
