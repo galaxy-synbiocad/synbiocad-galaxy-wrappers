@@ -1,20 +1,19 @@
-<tool id="rpFBA" name="FBA">
-	<description>Perform FBA for the RetroPath2.0 heterologous pathways</description>
+<tool id="rpFBA" name="FBA" version="5.1.4">
+    <description>Perform FBA for the RetroPath2.0 heterologous pathways</description>
 	<requirements>
-    <requirement type="package">rptools</requirement>
-  </requirements>
-  <stdio>
-    <regex match="WARNING" level="warning" />
-    <regex match="ERROR"   level="error" />
-  </stdio>
-  <command detect_errors="exit_code"><![CDATA[
-		python -m rptools.rpfba '$pathway' '$model' '$output'
+        <requirement type="package" version="5.1.4">rptools</requirement>
+    </requirements>
+    <stdio>
+        <regex match="WARNING" level="warning" />
+        <regex match="ERROR"   level="fatal" />
+    </stdio>
+    <command detect_errors="exit_code"><![CDATA[
+	    python -m rptools.rpfba '$pathway' '$model' '$compartment_id' '$output'
 			#if str($adv.dont_merge) == "false":
-				--dont_merge
+				--merge
 			#end if
 				--pathway_id '$adv.pathway_id'
 				--objective_id '$adv.objective_id'
-				--compartment_id '$adv.compartment_id'
 				--target_reaction '$input_sim_type.target_reaction'
 				--target_coefficient '$input_sim_type.target_coefficient'
 				--sim '$input_sim_type.sim_type'
@@ -37,16 +36,17 @@
 				--source_reaction ''
 				--fraction_of 0.0
 			#end if
-  ]]></command>
-  <inputs>
+    ]]></command>
+    <inputs>
 		<param name="pathway" type="data" format="xml" label="Pathway (rpSBML)" />
 		<param name="model"   type="data" format="xml" label="Model (SBML)" />
-    <conditional name="input_sim_type">
-      <param name="sim_type"     type="select" label="Constraint based simulation type">
-        <option value="fraction" type="text" selected="true">Fraction of Reaction</option>
-        <option value="fba"      type="text">FBA</option>
-        <option value="pfba"     type="text">Parsimonious FBA</option>
-      </param>
+        <param name="compartment_id" type="text" label="SBML compartment ID" value="MNXC3" />
+        <conditional name="input_sim_type">
+            <param name="sim_type"     type="select" label="Constraint based simulation type">
+                <option value="fraction" type="text" selected="true">Fraction of Reaction</option>
+                <option value="fba"      type="text">FBA</option>
+                <option value="pfba"     type="text">Parsimonious FBA</option>
+            </param>
 			<when value="fraction">
 				<param name="fraction_of"        type="float" value="0.75"       label="Fraction of the source reaction" />
 				<param name="target_reaction"    type="text"  value="rxn_target" label="Target reaction" />
@@ -63,26 +63,25 @@
 				<param name="target_reaction"    type="text"  value="rxn_target" label="Target reaction" />
 				<param name="target_coefficient" type="float" value="1.0"        label="Target coefficient" />
 			</when>
-    </conditional>
+        </conditional>
 		<section name="adv" title="Advanced Options" expanded="false">
 			<param name="pathway_id"     type="text"    label="Name of the heterologous pathway"     value="rp_pathway" />
 			<param name="objective_id"   type="text"    label="Overwrite default given objective ID" value="obj_fraction" />
 			<param name="is_max"         type="boolean" label="Maximise the objective?"              truevalue="True" falsevalue="False" checked="true" />
 			<param name="dont_merge"     type="boolean" label="Don't output the merged model?"       truevalue="True" falsevalue="False" checked="true" display="checkboxes" />
-			<param name="compartment_id" type="text"    label="SBML compartment ID"                  value="MNXC3" />
 			<param name="log_level"      type="select"  label="Log level">
-        <option value="debug"    type="text"                >debug</option>
-        <option value="info"     type="text"                >info</option>
-				<option value="warning"  type="text"                >warning</option>
-				<option value="error"    type="text" selected="true">error</option>
-				<option value="critical" type="text"                >critical</option>
-      </param>
+                <option value="debug"    type="text"                >debug</option>
+                <option value="info"     type="text"                >info</option>
+			    <option value="warning"  type="text"                >warning</option>
+			    <option value="error"    type="text" selected="true">error</option>
+			    <option value="critical" type="text"                >critical</option>
+            </param>
 		</section>
-  </inputs>
-  <outputs>
-    <data name="output" format="xml" label="${tool.name} - ${input_sim_type.sim_type} - ${pathway.name}" />
-  </outputs>
-  <help><![CDATA[
+    </inputs>
+    <outputs>
+        <data name="output" format="xml" label="${tool.name} - ${input_sim_type.sim_type} - ${pathway.name}" />
+    </outputs>
+    <help><![CDATA[
 FBA
 =====
 
@@ -96,6 +95,11 @@ The "Fraction of Reaction" method involves performing FBA using the "Source Reac
 For the first two, the user must specify the name(s) of reaction(s) that the model will optimize to, while for the latter the user must provide the target reaction but also another source reaction that will be restricted.
 Using the Advanced Options, the user can specify the name of the heterologous pathway as created by "Pathways to SBML" and the compartment ID of the heterologous pathway. The user may obtain a merged version of the resulting model, or the heterologous pathway only using the "Don't output the merged model" boolean parameter. Using the "Maximize the Objective?", the user may choose to maximize or minimize the objective (biomass production in this case) in the model.
 
+NOTE: In order to FBA works correctly, some of chemical species have to be ignored. These species are selected according to the following criteria:
+
+- pathway species has not been found in the model (neither by its ID nor its InChIKey),
+- the species is not the target, and
+- the species is only consumed or produced with the heterologue pathway.
 
 .. image:: https://raw.githubusercontent.com/Galaxy-SynBioCAD/rpFBA/standalone/galaxy/img/rpFBA.png
 	:width: 60 %
@@ -111,22 +115,22 @@ Input
 Required:
 
 
-* **-input_sbml**\ : (string) Path to the input file
-* **-gem_sbml**\ : (string) Path to the GEM SBML model
+* **-pathway**\ : (string) SBML file that contains an heterologous pathway
+* **-model**\ : (string) Path to the GEM SBML model
+* **-compartment_id**\ : (string) Model compartment id (e.g. 'c' or 'MNXC3')
 
 Advanced options:
 
 
 * **--pathway_id**\ : (string, default=rp_pathway) ID of the heterologous pathway
-* **--compartment_id**\ : (string, default=MNXC3 (i.e. cytoplasm)) ID of the compartment ID that contains the heterologous pathway
-* **--sim_type**\ : (string, default=fraction) Valid options include: fraction, fba, pfba. The type of constraint based modelling method
+* **--sim**\ : (string, default=fraction) Valid options include: fraction, fba, pfba. The type of constraint based modelling method
 * **--source_reaction**\ : (string, default=biomass) Name of the source reaction that will be restricted in the "fraction" simulation type. This parameter is ignored for "fba" and "pfba"
 * **--target_reaction**\ : (string, default=RP1_sink) Heterologous pathway flux sink reaction. This parameters is required in all simulation type
 * **--source_coefficient**\ : (float, default=1.0) Objective coefficient for the source reaction. This parameter is ignored for "fba" and "pfba"
 * **--target_coefficient**\ : (float, default=1.0) Objective coefficient for the target reaction.
 * **--is_max**\ : (boolean, default=True) Maximise or minimise the objective function
 * **--fraction_of**\ : (float, default=0.75) Portion of the maximal flux used to set the maximal and minimal bounds for the source reaction of the "fraction" simulation type
-* **--dont_merge**\ : (boolean, default=True) Return the merged GEM+heterologous pathway SBML or only the heterologous pathway SBML files
+* **--merge**\ : (boolean, default=False) output the full merged model instead of heterologous pathway only
 * **--log**: (string, default=error) Set the log level, choices are 'debug', 'info', 'warning', 'error', 'critical'
 
 Output
@@ -160,9 +164,9 @@ Acknowledgments
 
 
 * Thomas Duigou
-]]></help>
-  <citations>
-    <citation type="bibtex">
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
 @article{hucka2016sbml,
   title={SBML Level 3 package: Groups, Version 1 Release 1},
   author={Hucka, Michael and Smith, Lucian P},
@@ -173,8 +177,8 @@ Acknowledgments
   year={2016},
   publisher={De Gruyter}
 }
-    </citation>
-    <citation type="bibtex">
+        </citation>
+        <citation type="bibtex">
 @article{ebrahim2013cobrapy,
   title={COBRApy: COnstraints-based reconstruction and analysis for python},
   author={Ebrahim, Ali and Lerman, Joshua A and Palsson, Bernhard O and Hyduke, Daniel R},
@@ -185,6 +189,6 @@ Acknowledgments
   year={2013},
   publisher={Springer}
 }
-    </citation>
-  </citations>
+        </citation>
+    </citations>
 </tool>
