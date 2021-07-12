@@ -10,12 +10,12 @@
     </stdio>
     <command detect_errors="exit_code"><![CDATA[
         python -m rptools.rpthermo
-        -input '$input'
-        -output '$output' 
-        -ph '$adv.ph'
-        -ionic_strength '$adv.ionic_strength'
-        -pMg '$adv.pMg'
-        -temp_k '$adv.temp_k' 
+        '$input'
+        '$output' 
+        --ph '$adv.ph'
+        --ionic_strength '$adv.ionic_strength'
+        --pMg '$adv.pMg'
+        --temp_k '$adv.temp_k' 
     ]]></command>
     <inputs>
         <param name="input" type="data" format="xml" label="Input File" />
@@ -27,11 +27,7 @@
         </section>
     </inputs>
     <outputs>
-        <data name="output" format="tar" label="Thermodynamics" >
-            <change_format>
-                <when input="input_type.input_format" value="sbml" format="xml"/>
-            </change_format>
-        </data>	
+        <data name="output" format="xml" label="Thermodynamics" />
     </outputs>
     <help><![CDATA[
 Thermodynamics
@@ -50,15 +46,15 @@ Above is an illustration of the Gibbs free energy calculation using the componen
 
 Required:
 
-* **-input**\ : (string) Path to the input file
-* **-output**\ : (string) Path to the output file 
+* **input**\ : (string) Path to the input file
+* **output**\ : (string) Path to the output file 
 
 Advanced Options:
 
-* **-ph**\ :(float) Compartment PH of the pathway
-* **-ionic_strength**\ :(float) Compartment ionic strength of the pathway
-* **-pMg**\ :(float) Compartment pMg of the pathway
-* **-temp_k**\ :(float) Compartment temperature in Kelvin
+* **--ph**\ :(float) Compartment PH of the pathway
+* **--ionic_strength**\ :(float) Compartment ionic strength of the pathway
+* **--pMg**\ :(float) Compartment pMg of the pathway
+* **--temp_k**\ :(float) Compartment temperature in Kelvin
 
 Project Links
 ---------------------
