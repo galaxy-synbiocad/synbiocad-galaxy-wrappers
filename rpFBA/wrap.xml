@@ -1,7 +1,7 @@
-<tool id="rpFBA" name="FBA" version="5.1.4">
+<tool id="rpFBA" name="FBA" version="5.2.1">
     <description>Perform FBA for the RetroPath2.0 heterologous pathways</description>
 	<requirements>
-        <requirement type="package" version="5.1.4">rptools</requirement>
+        <requirement type="package" version="5.2.1">rptools</requirement>
     </requirements>
     <stdio>
         <regex match="WARNING" level="warning" />
@@ -12,28 +12,22 @@
 			#if str($adv.dont_merge) == "false":
 				--merge
 			#end if
-				--pathway_id '$adv.pathway_id'
-				--objective_id '$adv.objective_id'
-				--target_reaction '$input_sim_type.target_reaction'
-				--target_coefficient '$input_sim_type.target_coefficient'
+				--objective_rxn_id '$input_sim_type.objective_rxn_id'
 				--sim '$input_sim_type.sim_type'
-			#if str($adv.is_max) == "true":
-				--is_max
+            #if str($adv.ignore_orphan_species) == "true":
+                --ignore_orphan_species
 			#end if
 				--log '$adv.log_level'
 			#if str($input_sim_type.sim_type)=="fraction"
-				--source_coefficient '$input_sim_type.source_coefficient'
-				--source_reaction '$input_sim_type.source_reaction'
+				--biomass_rxn_id '$input_sim_type.biomass_rxn_id'
 				--fraction_of '$input_sim_type.fraction_of'
 			#end if
 			#if str($input_sim_type.sim_type)=="pfba"
-				--source_coefficient 0
-				--source_reaction ''
+				--biomass_rxn_id ''
 				--fraction_of '$input_sim_type.fraction_of'
 			#end if
 			#if str($input_sim_type.sim_type)=="fba"
-				--source_coefficient 0
-				--source_reaction ''
+				--biomass_rxn_id ''
 				--fraction_of 0.0
 			#end if
     ]]></command>
@@ -49,26 +43,20 @@
             </param>
 			<when value="fraction">
 				<param name="fraction_of"        type="float" value="0.75"       label="Fraction of the source reaction" />
-				<param name="target_reaction"    type="text"  value="rxn_target" label="Target reaction" />
-				<param name="source_coefficient" type="float" value="1.0"        label="Target coefficient" />
-				<param name="source_reaction"    type="text"  value="biomass"    label="Source reaction" />
-				<param name="target_coefficient" type="float" value="1.0"        label="Source coefficient" />
+				<param name="objective_rxn_id"    type="text"  value="rxn_target" label="reaction ID to optimise" />
+				<param name="biomass_rxn_id"    type="text"  value="biomass"    label="Source reaction" />
 			</when>
 			<when value="pfba">
 				<param name="fraction_of"        type="float" value="0.95"       label="Fraction of optimal" />
-				<param name="target_reaction"    type="text"  value="rxn_target" label="Target reaction" />
-				<param name="target_coefficient" type="float" value="1.0"        label="Target coefficient" />
+				<param name="objective_rxn_id"    type="text"  value="rxn_target" label="reaction ID to optimise" />
 			</when>
 			<when value="fba">
-				<param name="target_reaction"    type="text"  value="rxn_target" label="Target reaction" />
-				<param name="target_coefficient" type="float" value="1.0"        label="Target coefficient" />
+				<param name="objective_rxn_id"    type="text"  value="rxn_target" label="reaction ID to optimise" />
 			</when>
         </conditional>
 		<section name="adv" title="Advanced Options" expanded="false">
-			<param name="pathway_id"     type="text"    label="Name of the heterologous pathway"     value="rp_pathway" />
-			<param name="objective_id"   type="text"    label="Overwrite default given objective ID" value="obj_fraction" />
-			<param name="is_max"         type="boolean" label="Maximise the objective?"              checked="true" />
 			<param name="dont_merge"     type="boolean" label="Don't output the merged model?"       checked="true"   display="checkboxes" />
+            <param name="ignore_orphan_species"         type="boolean" label="Ignore metabolites that are only consumed or produced?"              checked="true" />
 			<param name="log_level"      type="select"  label="Log level">
                 <option value="debug"    type="text"                >debug</option>
                 <option value="info"     type="text"                >info</option>
@@ -115,28 +103,22 @@ Input
 Required:
 
 
-* **-pathway**\ : (string) SBML file that contains an heterologous pathway
-* **-model**\ : (string) Path to the GEM SBML model
-* **-compartment_id**\ : (string) Model compartment id (e.g. 'c' or 'MNXC3')
+* **pathway_file**\ : (string) SBML file that contains an heterologous pathway
+* **model_filel**\ : (string) Path to the GEM SBML model
+* **compartment_id**\ : (string) Model compartment id (e.g. 'c' or 'MNXC3')
+* **outfile**\ : (string) Path to the output file
 
 Advanced options:
 
 
-* **--pathway_id**\ : (string, default=rp_pathway) ID of the heterologous pathway
 * **--sim**\ : (string, default=fraction) Valid options include: fraction, fba, pfba. The type of constraint based modelling method
-* **--source_reaction**\ : (string, default=biomass) Name of the source reaction that will be restricted in the "fraction" simulation type. This parameter is ignored for "fba" and "pfba"
-* **--target_reaction**\ : (string, default=RP1_sink) Heterologous pathway flux sink reaction. This parameters is required in all simulation type
-* **--source_coefficient**\ : (float, default=1.0) Objective coefficient for the source reaction. This parameter is ignored for "fba" and "pfba"
-* **--target_coefficient**\ : (float, default=1.0) Objective coefficient for the target reaction.
-* **--is_max**\ : (boolean, default=True) Maximise or minimise the objective function
+* **--biomass_rxn_id**\ : (string, default=biomass) biomass reaction ID that will be restricted in the "fraction" simulation type. This parameter is ignored for "fba" and "pfba"
+* **--objective_rxn_id**\ : (string, default=rxn_target) reaction ID to optimise. This parameters is required in all simulation type
 * **--fraction_of**\ : (float, default=0.75) Portion of the maximal flux used to set the maximal and minimal bounds for the source reaction of the "fraction" simulation type
 * **--merge**\ : (boolean, default=False) output the full merged model instead of heterologous pathway only
+* **--ignore_orphan_species**\ : (boolean, default=True) ignore metabolites that are only consumed or produced
 * **--log**: (string, default=error) Set the log level, choices are 'debug', 'info', 'warning', 'error', 'critical'
 
-Output
-------
-
-* **output**\ : (string) Path to the output file
 
 Project Links
 ---------------------
