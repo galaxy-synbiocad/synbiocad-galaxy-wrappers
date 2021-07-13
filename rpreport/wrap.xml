@@ -1,0 +1,70 @@
+<tool id="rpreport" name="Pathways HTML Report" version="5.2.1">
+    <description>Generates HTML report to explore the main characteristics of pathways
+predicted with RetroPath suite</description>
+    <requirements>
+        <requirement type="package" version="5.2.1">rptools</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        #if str($input_type_conditional.input_type) == "sbml":
+            cd /tmp &&
+            #set input_folder="tmp_folder"
+            mkdir -p '$input_folder' &&
+            #for $input in $input_type_conditional.input_sbml.keys():
+                ln -sfn $input_type_conditional.input_sbml[$input] '$input_folder/$input';
+            #end for
+            python -m rptools.rpreport -d '$input_folder'
+        #elif str($input_type_conditional.input_type) == "tar":
+            python -m rptools.rpreport '${input_type_conditional.input_tar}'
+        #end if
+        '$html_file.files_path'
+        && cp '$html_file.files_path'/index.html '$html_file'
+    ]]></command>
+    <inputs>
+        <conditional name="input_type_conditional">
+            <param name="input_type" type="select" label="Source SBML format">
+                <option value="tar" selected="True">TAR</option>
+                <option value="sbml">Collection</option>
+            </param>
+            <when value="tar">
+                <param name="input_tar" type="data" format="tar" label="Source SBML" />
+            </when>
+            <when value="sbml">
+                <param name="input_sbml" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="html" name="html_file" label="Pathways HTML Report"/>
+    </outputs>
+    <help><![CDATA[
+        usage: rpreport [-h] [--log ARG] [--log_file LOG_FILE] [--silent] [--version]
+                [-d] [--dev] [-v] [--standalone]
+                source_path output_folder
+
+generates HTML pages to explore the main characteristics (thermodynamics,
+fluxes, number of metabolic steps, reaction rule score) of pathways predicted
+with RetroPath suite
+
+positional arguments:
+  source_path          Path to a tar archive (default) or folder (using '-d'
+                       option) containing rpSBML file(s).
+                       
+  output_folder        Output folder where report file(s) will be generated.
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --log ARG, -l ARG    Adds a console logger for the specified level (default:
+                       error)
+  --log_file LOG_FILE  Filename where to put logs
+  --silent, -s         run rpreport silently
+  --version            show the version number and exit
+  -d, --input_dir      source_path is a folder containing standalone rpSBML
+                       file(s).
+  --dev                For dev purpose only : create supplementary files into
+                       a dev folder
+  -v, --verbose        Turn on console verbose mode.
+  --standalone         if set will output an autonomous HTML containing all
+                       css and js files dependencies.
+
+    ]]></help>
+</tool>
