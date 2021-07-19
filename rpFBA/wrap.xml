@@ -9,7 +9,7 @@
     </stdio>
     <command detect_errors="exit_code"><![CDATA[
 	    python -m rptools.rpfba '$pathway' '$model' '$compartment_id' '$output'
-			#if str($adv.dont_merge) == "false":
+			#if str($adv.merge) == "true":
 				--merge
 			#end if
 				--objective_rxn_id '$input_sim_type.objective_rxn_id'
@@ -55,7 +55,7 @@
 			</when>
         </conditional>
 		<section name="adv" title="Advanced Options" expanded="false">
-			<param name="dont_merge"     type="boolean" label="Don't output the merged model?"       checked="true"   display="checkboxes" />
+			<param name="merge"     type="boolean" label="Output the merged model?"       checked="false"   display="checkboxes" />
             <param name="ignore_orphan_species"         type="boolean" label="Ignore metabolites that are only consumed or produced?"              checked="true" />
 			<param name="log_level"      type="select"  label="Log level">
                 <option value="debug"    type="text"                >debug</option>
@@ -81,7 +81,7 @@ Flux balance analysis is a mathematical approach for analyzing the flow of metab
 
 The "Fraction of Reaction" method involves performing FBA using the "Source Reaction" as the objective function (by default the biomass reaction is specified, which refers to the rate at which all of the biomass precursors are made in the correct proportions). Then the flux of that reaction has its upper and lower bounds set to the same value, determined as a "Fraction of the source reaction" (default is 75% of its optimum). Thereafter, the objective is set to the target reaction followed by performing FBA once again. The tool uses the FBC package to manage the objective and flux bounds.
 For the first two, the user must specify the name(s) of reaction(s) that the model will optimize to, while for the latter the user must provide the target reaction but also another source reaction that will be restricted.
-Using the Advanced Options, the user can specify the name of the heterologous pathway as created by "Pathways to SBML" and the compartment ID of the heterologous pathway. The user may obtain a merged version of the resulting model, or the heterologous pathway only using the "Don't output the merged model" boolean parameter. Using the "Maximize the Objective?", the user may choose to maximize or minimize the objective (biomass production in this case) in the model.
+Using the Advanced Options, the user can specify the name of the heterologous pathway as created by "Pathways to SBML" and the compartment ID of the heterologous pathway. The user may obtain a merged version of the resulting model, or the heterologous pathway only using the "output the merged model ?" boolean parameter. Using the "Maximize the Objective?", the user may choose to maximize or minimize the objective (biomass production in this case) in the model.
 
 NOTE: In order to FBA works correctly, some of chemical species have to be ignored. These species are selected according to the following criteria:
 
