@@ -9,6 +9,7 @@
         --d '$adv.direction'
         #if str($adv.NoMSA) == "false":
             --NoMSA
+        #end if
         --host '$adv.host'
     ]]></command>
     <inputs>
