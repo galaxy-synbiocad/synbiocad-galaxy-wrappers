@@ -1,0 +1,63 @@
+<tool id="selenzy-wrapper" name="enzyme selection tool for pathway design" version="0.1.1">
+    <description>Performs enzyme selection from a reaction query</description>
+	<requirements>
+        <requirement type="package" version="0.1.1">selenzy_wrapper</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+	    python -m selenzy_wrapper '$pathway' '$outfile'
+        --nb_targets '$adv.nb_targets'
+        --d '$adv.direction'
+        #if str($adv.NoMSA) == "false":
+            --NoMSA
+        #end if
+        --host '$adv.host'
+    ]]></command>
+    <inputs>
+		<param name="pathway" type="data" format="xml" label="Pathway (rpSBML)" />
+        <section name="adv" title="Advanced Options" expanded="false">
+		    <param name="nb_targets"        type="integer" value="20"       label="Number of targets to display in results" />
+            <param name="direction"        type="float" value="0"       label="Use similiarity values for preferred reaction direction only" />
+            <param name="NoMSA"     type="boolean" label="Do not compute MSA/conservation scores ?"       checked="false"   display="checkboxes" />
+            <param name="host" type="text" label="Comma separated taxon ids" value="83333" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="outfile" format="xml" label="${tool.name} - ${pathway.name}" />
+    </outputs>
+    <help><![CDATA[
+
+usage: selenzy-wrapper [-h] [--log ARG] [--log_file LOG_FILE] [--silent] [--version] [--nb_targets NB_TARGETS] [--d D] [--NoMSA] [--smarts] [--host HOST] pathway_file outfile
+
+rpSBML wrapper for selenzy tool
+
+positional arguments:
+  pathway_file          path to pathway file
+  outfile               specify output file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --log ARG, -l ARG     Adds a console logger for the specified level (default: error)
+  --log_file LOG_FILE   Filename where to put logs
+  --silent, -s          run selenzy-wrapper silently
+  --version             show the version number and exit
+  --nb_targets NB_TARGETS
+                        Number of targets to display in results [default = 20]
+  --d D                 Use similiarity values for preferred reaction direction only [default=0 (OFF)]
+  --NoMSA               Do not compute MSA/conservation scores
+  --host HOST           Comma separated taxon ids [default: E. coli]
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+@article{10.1093/bioinformatics/bty065,
+  title={Selenzyme: enzyme selection tool for pathway design},
+  author={Pablo Carbonell, Jerry Wong, Neil Swainston, Eriko Takano, Nicholas J Turner, Nigel S Scrutton, Douglas B Kell, Rainer Breitling, Jean-Loup Faulon},
+  volume={34},
+  pages={2153–2154},
+  year={2018},
+  doi = {10.1093/bioinformatics/bty065},
+  url = {https://doi.org/10.1093/bioinformatics/bty065},
+}
+        </citation>
+    </citations>
+</tool>
