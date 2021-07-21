@@ -19,7 +19,7 @@
             #if $source_name:
                 --source_name '$source_name'
             #end if
-            --max_steps '$max_steps'
+            --max_steps '$adv.max_steps'
             --topx '$adv.topx'
             --dmin '$adv.dmin'
             --dmax '$adv.dmax'
@@ -31,10 +31,12 @@
     <inputs>
         <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
         <param name="sinkfile"     type="data" format="csv" label="Sink File"              />
-        <param name="source_inchi" type="text"              label="Source InChI"           />
+        <param name="source_inchi" type="text"       label="Source InChI"     optional="false"    >
+            <validator type="empty_field" message="You must provide the InChI key" />
+        </param>
         <param name="source_name"  type="text" value="target" optional="true" label="Source name"         />
-        <param name="max_steps"    type="integer" value="3" label="Maximal Pathway length" />
         <section name="adv" title="Advanced Options" expanded="false">
+            <param name="max_steps"    type="integer" value="3" label="Maximal Pathway length" />
             <param name="topx"         type="integer" value="100"  label="TopX"                                  />
             <param name="dmin"         type="integer" value="0"    label="Minimum rule diameter"                 />
             <param name="dmax"         type="integer" value="1000" label="Maximum rule diameter"                 />
