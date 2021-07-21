@@ -28,11 +28,9 @@
         </section>
     </inputs>
     <outputs>
-        <collection type="list" name="dnabot_dir" label="Dataset for DNA-BOT">
-            <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
-            <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
-        </collection>
-        <collection type="list" label="SBOL constructs" name="sbol_dir">
+        <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" label="${tool.name}: constructs" />
+        <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" label="${tool.name}: User parts coords"/>
+        <collection type="list" label="${tool.name}: SBOL constructs" name="sbol_dir">
             <discover_datasets pattern="__designation__" format="xml" directory="out/sbol_export" />
         </collection>
     </outputs>
