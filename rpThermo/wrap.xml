@@ -1,7 +1,7 @@
-<tool id="rpThermo" name="Thermodynamics" version="5.3.2">
+<tool id="rpThermo" name="Thermodynamics" version="5.3.3">
     <description>Calculate the formation energy of chemical species and the Gibbs free energy of their reactions and pathways in an SBML</description>
     <requirements>
-        <requirement type="package" version="5.3.2">rptools</requirement>
+        <requirement type="package" version="5.3.3">rptools</requirement>
     </requirements>
     <stdio>
         <regex match="WARNING:" level="warning" />
