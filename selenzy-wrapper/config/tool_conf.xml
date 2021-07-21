@@ -1,0 +1,3 @@
+  <section id="sbc-util" name="SynBioCAD Utilities">
+    <tool file="BRSynthTools/selenzy-wrapper/wrap.xml" />
+  </section>

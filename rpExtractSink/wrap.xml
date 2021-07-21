@@ -1,7 +1,7 @@
-<tool id="rpExtractSink" name="Sink from SBML" version="5.0.0">
+<tool id="rpExtractSink" name="Sink from SBML" version="5.3.2">
     <description>Generate the RetroPath2.0 sink file from an SBML input</description>
     <requirements>
-        <requirement type="package">rptools</requirement>
+        <requirement type="package" version="5.3.2">rptools</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         python -m rptools.rpextractsink
@@ -13,8 +13,8 @@
         #end if
     ]]></command>
     <inputs>
-        <param name="input" type="data" format="sbml" optional="false" label="SBML" />
-        <param name="remove_dead_end" type="boolean" truevalue="True" falsevalue="False" checked="true" label="Remove dead-end metabolites using FVA evaluation?" />
+        <param name="input" type="data" format="sbml" optional="false" label="SBML model" />
+        <param name="remove_dead_end" type="boolean" checked="true" label="Remove dead-end metabolites using FVA evaluation?" />
         <section name="adv" title="Advanced Options" expanded="false">
             <param name="compartment_id" type="text" value="MNXC3" label="SBML compartment ID" />
         </section>
