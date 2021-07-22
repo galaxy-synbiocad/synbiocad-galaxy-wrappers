@@ -1,58 +1,55 @@
-<tool id="rpbasicdesign" name="DNA-BOT input files from rpSBML" version="0.2.0">
-  <description>Build DNA-BOT input files from rpSBML</description>
-  <requirements>
-    <requirement type="package" version="0.2.2">rpbasicdesign</requirement>
-  </requirements>
-  <command detect_errors="exit_code"><![CDATA[
-      python -m rpbasicdesign.cli
-	  --rpsbml_file '$rpsbml_file'
-    #if $adv.parts_files
-      #set files = '" "'.join([str($file) for $file in $adv.parts_files])
-      --parts_files "${files}"
-    #end if
-    #if str($construct_type) == "monocistronic":
-      --monocistronic true
-    #else
-      --monocistronic false
-    #end if
-    --lms_id '$adv.lms_id'
-    --lmp_id '$adv.lmp_id'
-    --backbone_id '$backbone_id'
-    --sample_size '$sample_size'
-	  --o_dnabot_dir 'out/dnabot_in'
-    --o_sbol_dir 'out/sbol_export'
-  ]]></command>
-  <inputs>
-    <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
-    <param name="construct_type" type="select" label="Construct type">
-      <option value="monocistronic" >monocistronic</option>
-      <option value="polycistronic" selected="true">polycistronic</option>
-    </param>
-    <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
-    <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
-    <section name="adv" title="Advanced Options" expanded="false">
-      <param type="data" name="parts_files" optional="true" label="Linkers and user parts" multiple="true" format="csv" />
-      <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
-      <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
-    </section>
-  </inputs>
-  <outputs>
-    <collection type="list" name="dnabot_dir" label="Dataset for DNA-BOT">
-      <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" />
-      <data name="User parts coords" format="csv" from_work_dir="out/dnabot_in/user_parts_coords.csv" />
-    </collection>
-    <collection type="list" label="SBOL constructs" name="sbol_dir">
-      <discover_datasets pattern="__designation__" format="xml" directory="out/sbol_export" />
-    </collection>
-  </outputs>
-  <help><![CDATA[
-        usage: python -m dnaprep.cli [-h] --rpsbml_file RPSBML_FILE
+<tool id="rpbasicdesign" name="BasicDesign" version="0.3.1">
+    <description>Build DNA-BOT input files from rpSBML</description>
+    <requirements>
+        <requirement type="package" version="0.3.1">rpbasicdesign</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python -m rpbasicdesign.cli
+        --rpsbml_file '$rpsbml_file'
+        #if $adv.parts_files
+            #set files = '" "'.join([str($file) for $file in $adv.parts_files])
+            --parts_files "${files}"
+        #end if
+        --lms_id '$adv.lms_id'
+        --lmp_id '$adv.lmp_id'
+        --backbone_id '$backbone_id'
+        --sample_size '$sample_size'
+        #if str($adv.cds_permutation) == "true"
+            --cds_permutation true
+        #else
+            --cds_permutation false
+        #end if
+        --o_dnabot_dir 'out/dnabot_in'
+        --o_sbol_dir 'out/sbol_export'
+    ]]></command>
+    <inputs>
+        <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
+        <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
+        <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
+        <section name="adv" title="Advanced Options" expanded="false">
+            <param type="data" name="parts_files" optional="true" label="Linkers and user parts" multiple="true" format="csv" />
+            <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
+            <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
+            <param name="cds_permutation" type="boolean" label="Perform CDS permutation?" checked="true" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" label="${tool.name}: constructs" />
+        <data name="User parts plate" format="csv" from_work_dir="out/dnabot_in/user_parts_plate.csv" label="${tool.name}: User parts plate"/>
+        <data name="Biolegio plate" format="csv" from_work_dir="out/dnabot_in/biolegio_plate.csv" label="${tool.name}: Biolegio plate"/>
+        <collection type="list" label="${tool.name}: SBOL constructs" name="sbol_dir">
+            <discover_datasets pattern="__designation__" format="xml" directory="out/sbol_export" />
+        </collection>
+    </outputs>
+    <help><![CDATA[
+        usage: python -m rpbasicdesign.cli [-h] --rpsbml_file RPSBML_FILE
 
                              [--parts_files PARTS_FILES [PARTS_FILES ...]]
 
-                             [--monocistronic MONOCISTRONIC] [--lms_id LMS_ID]
+                             [--lms_id LMS_ID]
                              [--lmp_id LMP_ID] [--backbone_id BACKBONE_ID]
                              [--sample_size SAMPLE_SIZE]
+                             [--cds_permutation CDS_PERMUTATION]
                              [--o_dnabot_dir O_DNABOT_DIR]
                              [--o_sbol_dir O_SBOL_DIR]
 
@@ -73,17 +70,16 @@ optional arguments:
                         List of files providing available linkers and user
                         parts (backbone, promoters, ...) for constructs.
 
-  --monocistronic MONOCISTRONIC
-                        Build monocistronic constructs. Default to false, ie
-                        polycistronic constructs will be generated.
   --lms_id LMS_ID       part ID to be used as the LMS methylated linker
   --lmp_id LMP_ID       part ID to be used as the LMP methylated linker
   --backbone_id BACKBONE_ID
                         part ID to be used as the backbone
   --sample_size SAMPLE_SIZE
                         Number of construct to generate.
+  --cds_permutation CDS_PERMUTATION
+                        Whether all combinations of CDS permutation should be built Default: true
   --o_dnabot_dir O_DNABOT_DIR
-                        Output folder to write construct and coord part files.
+                        Output folder to write construct and plate files.
                         It will be created if it does not exist yet. Existing
                         files will be overwritten. Default: out/dnabot_in
   --o_sbol_dir O_SBOL_DIR
@@ -91,9 +87,9 @@ optional arguments:
                         It will be created if it does not exist yet. Existing
                         files will be overwritten. Default: out/sbol_export
 
-  ]]></help>
-  <citations>
-    <citation type="bibtex">
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
       @article{10.1093/synbio/ysaa010,
           author = {Storch, Marko and Haines, Matthew C and Baldwin, Geoff S},
           title = {DNA-BOT: a low-cost, automated DNA assembly platform for synthetic biology},
@@ -108,6 +104,6 @@ optional arguments:
           note = {ysaa010},
           eprint = {https://academic.oup.com/synbio/article-pdf/5/1/ysaa010/33722340/ysaa010.pdf},
       }
-    </citation>
-  </citations>
+        </citation>
+    </citations>
 </tool>
