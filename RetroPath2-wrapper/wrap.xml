@@ -1,4 +1,4 @@
-<tool id="retropath2" name="RetroPath2.0" version="2.0.0">
+<tool id="retropath2" name="RetroPath2.0" version="2.0.1">
     <description>Build a reaction network from a set of source compounds to a set of sink compounds</description>
     <requirements>
         <requirement type="package" version="2.0.1">retropath2_wrapper</requirement>
