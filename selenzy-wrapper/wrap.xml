@@ -10,15 +10,15 @@
         #if str($adv.NoMSA) == "false":
             --NoMSA
         #end if
-        --host '$adv.host'
+        --taxonIDs '$adv.taxonIDs'
     ]]></command>
     <inputs>
 		<param name="pathway" type="data" format="xml" label="Pathway (rpSBML)" />
         <section name="adv" title="Advanced Options" expanded="false">
-		    <param name="nb_targets"        type="integer" value="20"       label="Number of targets to display in results" />
+		    <param name="nb_targets"        type="integer" value="500"       label="Number of targets to display in results" />
             <param name="direction"        type="float" value="0"       label="Use similiarity values for preferred reaction direction only" />
-            <param name="NoMSA"     type="boolean" label="Do not compute MSA/conservation scores ?"       checked="false"   display="checkboxes" />
-            <param name="host" type="text" label="Comma separated taxon ids" value="83333" />
+            <param name="NoMSA"     type="boolean" label="Do not compute MSA/conservation scores ?"       checked="true"   display="checkboxes" />
+            <param name="taxonIDs" type="text" label="Comma separated taxon ids (first considered as the host)" value="83333" />
         </section>
     </inputs>
     <outputs>
