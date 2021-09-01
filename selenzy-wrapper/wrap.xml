@@ -1,7 +1,7 @@
-<tool id="selenzy-wrapper" name="Selenzyme" version="0.2.0">
+<tool id="selenzy-wrapper" name="Selenzyme" version="0.3.0">
     <description>Performs enzyme selection from a reaction query</description>
 	<requirements>
-        <requirement type="package" version="0.2.0">selenzy_wrapper</requirement>
+        <requirement type="package" version="0.3.0">selenzy_wrapper</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 	    python -m selenzy_wrapper '$pathway' '$outfile'
