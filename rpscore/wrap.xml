@@ -5,7 +5,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 	    python -m rptools.rpscore '$pathway' '$output'
-        --no_of_rxns_thres '$no_of_rxns_thres'
+        --no_of_rxns_thres '$adv.no_of_rxns_thres'
         --log '$adv.log_level'
     ]]></command>
     <inputs>
@@ -26,7 +26,8 @@
     </outputs>
     <help><![CDATA[
 rpscore
-=====
+=========
+
 
 Computes a global score for a heterologous pathway. The score is calculated from a learning process based on reaction rules score, flux balance analysis and thermodynamics metrics, and the number of reactions in the pathway.
 
