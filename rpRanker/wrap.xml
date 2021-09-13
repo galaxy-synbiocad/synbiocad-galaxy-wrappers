@@ -13,7 +13,7 @@
         #for $input in $pathway_collection
           '$input'
         #end for
-        --data_outdir ranked_pathways
+        --sorted_pathways '$sorted_pathways'
   ]]></command>
   <inputs>
     <param name="pathway_collection" type="data_collection" collection_type="list" label="Pathways" />
@@ -22,9 +22,10 @@
     </section> -->
   </inputs>
   <outputs>
-    <collection name="Ranked pathways" type="list" label="${tool.name}">
+    <!-- <collection name="Ranked pathways" type="list" label="${tool.name}">
       <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" ext="xml" directory="ranked_pathways" visible="false" />
-    </collection>
+    </collection> -->
+    <data name="sorted_pathways" format="xml" label="${tool.name} - ${pathway_collection.name}" />
   </outputs>
   <help><![CDATA[
 Rank Pathways
