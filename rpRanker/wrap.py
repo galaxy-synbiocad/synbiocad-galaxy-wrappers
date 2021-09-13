@@ -25,7 +25,7 @@ def entry_point():
     pathways = {}
     for infile in args.pathways:
         pathway = rpPathway.from_rpSBML(infile)
-        pathways[f'{pathway.get_id()} {infile}'] = pathway.get_global_score()
+        pathways[f'{pathway.get_id()} {infile} {pathway.get_global_score()}'] = pathway.get_global_score()
     sorted_pathways = dict(sorted(pathways.items(), key=lambda item: item[1]))
     sorted_pathways_str = '\n'.join(sorted_pathways.keys())
     print('Sorted Pathways')
