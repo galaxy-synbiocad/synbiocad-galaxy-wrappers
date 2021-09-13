@@ -11,7 +11,7 @@
     <command detect_errors="exit_code"><![CDATA[
         python -m rptools.rpthermo
         '$input'
-        '$output' 
+        '$pathway_with_thermo' 
         --ph '$adv.ph'
         --ionic_strength '$adv.ionic_strength'
         --pMg '$adv.pMg'
@@ -27,7 +27,7 @@
         </section>
     </inputs>
     <outputs>
-        <data name="Pathway with thermo metrics" format="xml" label="Thermodynamics" />
+        <data name="pathway_with_thermo" format="xml" label="${tool.name} - ${input.name}" />
     </outputs>
     <help><![CDATA[
 Thermodynamics
