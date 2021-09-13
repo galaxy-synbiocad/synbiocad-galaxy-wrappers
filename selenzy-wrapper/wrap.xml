@@ -4,7 +4,7 @@
         <requirement type="package" version="0.4.0">selenzy_wrapper</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-	    python -m selenzy_wrapper '$pathway' '$outfile'
+	    python -m selenzy_wrapper '$pathway' '$uniprot_ids'
         --nb_targets '$adv.nb_targets'
         --d '$adv.direction'
         #if str($adv.NoMSA) == "false":
@@ -22,7 +22,7 @@
         </section>
     </inputs>
     <outputs>
-        <data name="outfile" format="xml" label="${tool.name} - ${pathway.name}" />
+        <data name="uniprot_ids" format="xml" label="${tool.name} - ${pathway.name}" />
     </outputs>
     <help><![CDATA[
 
