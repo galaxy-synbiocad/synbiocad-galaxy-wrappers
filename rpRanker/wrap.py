@@ -25,11 +25,11 @@ def entry_point():
     pathways = {}
     for infile in args.pathways:
         pathways[infile] = rpPathway.from_rpSBML(infile).get_global_score()
-    sorted_pathways = sorted(pathways.items(), key=lambda item: item[1])
+    sorted_pathways = dict(sorted(pathways.items(), key=lambda item: item[1]))
     print(
-        '\n'.join(sorted_pathways)
+        '\n'.join(sorted_pathways.keys())
     )
-    return sorted_pathways()
+    return sorted_pathways
 
 
 def _cli():
