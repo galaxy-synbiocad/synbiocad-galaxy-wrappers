@@ -4,7 +4,7 @@
         <requirement type="package" version="5.4.1">rptools</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-	    python -m rptools.rpscore '$pathway' '$output'
+	    python -m rptools.rpscore '$pathway' '$scored_pathway'
         --no_of_rxns_thres '$adv.no_of_rxns_thres'
         --log '$adv.log_level'
     ]]></command>
@@ -22,7 +22,7 @@
 		</section>
     </inputs>
     <outputs>
-        <data name="Scored Pathway" format="xml" label="${tool.name} - ${pathway.name}" />
+        <data name="scored_pathway" format="xml" label="${pathway.name}" />
     </outputs>
     <help><![CDATA[
 rpscore
