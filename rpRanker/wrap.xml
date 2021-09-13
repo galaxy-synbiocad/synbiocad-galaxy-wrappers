@@ -8,7 +8,7 @@
 		<regex match="ERROR" level="error" />
 	</stdio>
   <command detect_errors="exit_code"><![CDATA[
-      python wrap.py
+      python '$__tool_directory__/wrap.py'
         --pathways
         #for $input in $pathway_collection
           '$input'
