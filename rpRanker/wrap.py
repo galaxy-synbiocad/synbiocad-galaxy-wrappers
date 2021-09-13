@@ -1,11 +1,12 @@
-from argparse  import ArgumentParser
+from argparse import ArgumentParser
 from rptools.rplibs import rpPathway
 
 
 def read_args():
     parser = ArgumentParser()
     parser.add_argument(
-        'pathways',
+        '--pathways',
+        required=True,
         type='str',
         nargs='+',
         help='show the version number and exit'

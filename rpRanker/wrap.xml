@@ -8,7 +8,8 @@
 		<regex match="ERROR" level="error" />
 	</stdio>
   <command detect_errors="exit_code"><![CDATA[
-      python -m rptools.rpranker
+      python wrap.py
+        --pathways
         #for $input in $pathway_collection
           '$input'
         #end for
