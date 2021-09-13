@@ -1,3 +1,0 @@
-  <section id="sbc-pa" name="SynBioCAD Pathway Analysis">
-    <tool file="BRSynthTools/rpScorer/wrap.xml" />
-  </section>
