@@ -17,8 +17,8 @@
         '$rp2_pathways'
         --outdir '$outFolder'
         --timeout '$adv.timeout' &&
-        cp '$outFolder'/compounds.txt '$rp2paths_compounds' &&
-        cp '$outFolder'/out_paths.csv '$rp2paths_pathways' &&
+        cp '$outFolder'/compounds.txt '$compounds' &&
+        cp '$outFolder'/out_paths.csv '$master_pathways' &&
         rm -rf $outFolder
     ]]></command>
     <inputs>
@@ -28,15 +28,15 @@
         </section>
     </inputs>
     <outputs>
-        <data name="rp2paths_pathways" format="csv" label="${tool.name} Pathways" />
-        <data name="rp2paths_compounds" format="tsv" label="${tool.name} Compounds" />
+        <data name="master_pathways" format="csv" label="${tool.name} (Pathways)" />
+        <data name="compounds" format="tsv" label="${tool.name} (Compounds)" />
     </outputs>
     <tests>
         <test>
             <!-- test 1: check if identical outputs are produced with default parameters  -->
             <param name="rp2_pathways" value="results_retropath2.csv" />
-            <output name="rp2paths_pathways" file="rp2paths_pathways.csv" ftype="csv" compare="diff"/>
-            <output name="rp2paths_compounds" file="rp2paths_compounds.tsv" ftype="tsv" compare="diff"/>
+            <output name="master_pathways" file="rp2paths_pathways.csv" ftype="csv" compare="diff"/>
+            <output name="compounds" file="rp2paths_compounds.tsv" ftype="tsv" compare="diff"/>
         </test>
     </tests>
     <help><![CDATA[

@@ -26,7 +26,7 @@
             --mwmax_source '$adv.mwmax_source'
             --mwmax_cof '$adv.mwmax_cof'
             --timeout '$adv.timeout'
-        && cp out/*_scope.csv '$output'
+        && cp out/*_scope.csv '$Reaction_Network'
   ]]></command>
     <inputs>
         <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
@@ -46,7 +46,7 @@
         </section>
     </inputs>
     <outputs>
-	    <data name="output" format="csv" label="${tool.name}" />
+	    <data name="Reaction_Network" format="csv" label="${tool.name}" />
     </outputs>
     <tests>
         <test>
