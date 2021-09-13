@@ -6,7 +6,7 @@
     <command detect_errors="exit_code"><![CDATA[
         python -m rptools.rpextractsink
         '$input'
-        '$output'
+        '$sink'
         --compartment_id '$adv.compartment_id'
         #if str($remove_dead_end) == "true":
             --remove_dead_end
@@ -20,13 +20,13 @@
         </section>
     </inputs>
     <outputs>
-        <data name="output" format="csv" label="${tool.name} ${input.name}" />
+        <data name="sink" format="csv" label="${tool.name} ${input.name}" />
     </outputs>
     <tests>
         <test>
         <!-- test 1: check if identical outputs are produced with default parameters  -->
             <param name="input" value="E.coli.sbml" />
-            <output name="output" file="sink.csv" ftype="csv" compare="diff"/>
+            <output name="sink" file="sink.csv" ftype="csv" compare="diff"/>
         </test>
     </tests>
     <help><![CDATA[
