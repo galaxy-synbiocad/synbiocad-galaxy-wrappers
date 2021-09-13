@@ -19,10 +19,10 @@
         --diameters '$diameters'
         --output-format csv
         #if str($compress) == "true":
-            --outfile '$output'.csv.gz ;
-            mv '$output'.csv.gz '$output'
+            --outfile '$out_rules'.csv.gz ;
+            mv '$out_rules'.csv.gz '$out_rules'
         #else:
-            --outfile '$output'
+            --outfile '$out_rules'
         #end if
     ]]></command>
     <inputs>
@@ -57,7 +57,7 @@
         <param name="compress" type="boolean" display="checkboxes" label="Compress output" />
     </inputs>
     <outputs>
-        <data name="output" format="csv" label="${tool.name} - ${rules.type} - d=$diameters" >
+        <data name="out_rules" format="csv" label="${tool.name} - ${rules.type} - d=$diameters" >
             <change_format>
                 <when input="compress" value="true" format="csv.gz"/>
             </change_format>
@@ -67,7 +67,7 @@
         <test>
         <!-- test 1: check if identical outputs are produced with compress option -->
             <param name="compress" value="True" />
-            <output name="output" file="rules.csv.gz" compare="diff" decompress="True"/>
+            <output name="out_rules" file="rules.csv.gz" compare="diff" decompress="True"/>
         </test>
     </tests>
     <help><![CDATA[
