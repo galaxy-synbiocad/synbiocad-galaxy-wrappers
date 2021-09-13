@@ -30,7 +30,7 @@
         </section>
     </inputs>
     <outputs>
-        <collection name="list_output" type="list" label="${tool.name}">
+        <collection name="pathways" type="list" label="${tool.name}">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.xml" format="xml" directory="completed_pathways" visible="false" />
         </collection>
     </outputs>
