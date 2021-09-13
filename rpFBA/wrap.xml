@@ -8,7 +8,7 @@
         <regex match="ERROR"   level="fatal" />
     </stdio>
     <command detect_errors="exit_code"><![CDATA[
-	    python -m rptools.rpfba '$pathway' '$model' '$compartment_id' '$output'
+	    python -m rptools.rpfba '$pathway' '$model' '$compartment_id' '$pathway_with_fba'
 			#if str($adv.merge) == "true":
 				--merge
 			#end if
@@ -67,7 +67,7 @@
 		</section>
     </inputs>
     <outputs>
-        <data name="Pathway with FBA metrics" format="xml" label="${tool.name} - ${input_sim_type.sim_type} - ${pathway.name}" />
+        <data name="pathway_with_fba" format="xml" label="${tool.name} - ${input_sim_type.sim_type} - ${pathway.name}" />
     </outputs>
     <help><![CDATA[
 FBA
