@@ -22,7 +22,7 @@
 		</section>
     </inputs>
     <outputs>
-        <data name="output" format="xml" label="${tool.name} - ${pathway.name}" />
+        <data name="Scored Pathway" format="xml" label="${tool.name} - ${pathway.name}" />
     </outputs>
     <help><![CDATA[
 rpscore
