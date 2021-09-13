@@ -1,4 +1,4 @@
-<tool id="rpscore" name="rpscore" version="5.4.1">
+<tool id="rpscore" name="Score Pathway" version="5.4.1">
     <description>Computes a global score for a heterologous pathway.</description>
 	<requirements>
         <requirement type="package" version="5.4.1">rptools</requirement>
