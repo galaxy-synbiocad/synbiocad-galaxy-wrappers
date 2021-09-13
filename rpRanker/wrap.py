@@ -7,14 +7,14 @@ def read_args():
     parser.add_argument(
         '--pathways',
         required=True,
-        type='str',
+        type=str,
         nargs='+',
         help='show the version number and exit'
     )
     parser.add_argument(
         '--data_outdir',
         required=True,
-        type='str',
+        type=str,
         help='show the version number and exit'
     )
     return parser.parse_args()
