@@ -27,7 +27,7 @@
         </section>
     </inputs>
     <outputs>
-        <data name="output" format="xml" label="Thermodynamics" />
+        <data name="Pathway with thermo metrics" format="xml" label="Thermodynamics" />
     </outputs>
     <help><![CDATA[
 Thermodynamics
