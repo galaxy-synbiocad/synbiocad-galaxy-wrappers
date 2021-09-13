@@ -67,7 +67,7 @@
 		</section>
     </inputs>
     <outputs>
-        <data name="pathway_with_fba" format="xml" label="${tool.name} - ${input_sim_type.sim_type} - ${pathway.name}" />
+        <data name="pathway_with_fba" format="xml" label="${tool.name}(${input_sim_type.sim_type}) - ${pathway.name}" />
     </outputs>
     <help><![CDATA[
 FBA
