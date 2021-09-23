@@ -1,7 +1,7 @@
-<tool id="rpviz" name="Visualize pathways" version="0.0.0">
+<tool id="rpviz" name="Visualize pathways" version="0.2.0">
   <description>Visualize pathways from the RetroPath Suite</description>
   <requirements>
-    <requirement type="package" version="0.1.1">rpviz</requirement>
+    <requirement type="package" version="0.2.0">rpviz</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
     #if str($input_type_conditional.input_type) == "sbml":
@@ -48,9 +48,9 @@
       <param name="input_type" value="sbml"/>
       <param name="input_sbml">
         <collection type="list">
-          <element name="file1" value='rpviz/5 - RetroPath_Pathway_3_1_sbml.xml' />
-          <element name="file2" value='rpviz/4 - RetroPath_Pathway_1_1_sbml.xml' />
-          <element name="file3" value='rpviz/1 - RetroPath_Pathway_2_1_sbml.xml' />
+          <element name="file1" value='rpviz/rp_001_0006.xml' />
+          <element name="file2" value='rpviz/rp_002_0010.xml' />
+          <element name="file3" value='rpviz/rp_003_0276.xml' />
         </collection>
       </param>
     </conditional>
@@ -60,7 +60,7 @@
   <!-- test 2: check if identical html output is produced (tar input) --> 
   <conditional name="input_type_conditional">
     <param name="input_type" value="tar"/>
-    <param name="input_tar" value="rpviz/as_dir.tar" />
+    <param name="input_tar" value="rpviz/as_tar.tgz" />
   </conditional>
   <output name="html_file" file="rpviz/autonomous.html" compare="diff"/>
   </test>
@@ -86,8 +86,6 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   --debug               Turn on debug instructions
-  --template_folder TEMPLATE_FOLDER
-                        Path to the folder containing templates
   --cofactor COFACTOR   File listing structures to consider as 
                         cofactors.
   --autonomous_html AUTONOMOUS_HTML
