@@ -4,12 +4,11 @@
     <requirement type="package" version="0.2.0">rpviz</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
+    #set input_folder="input_folder"
+    mkdir -p '$input_folder';
     #if str($input_type_conditional.input_type) == "sbml":
-      cd /tmp &&
-      #set input_folder="input_folder"
-      mkdir -p '$input_folder' &&
       #for $input in $input_type_conditional.input_sbml.keys():
-        ln -sfn $input_type_conditional.input_sbml[$input] '$input_folder/$input';
+        cp $input_type_conditional.input_sbml[$input] '$input_folder/$input';
       #end for
       python -m rpviz.cli '$input_folder'
     #elif str($input_type_conditional.input_type) == "tar":
@@ -19,7 +18,8 @@
     #if $adv.cofactor_file
       --cofactor '$adv.cofactor_file'
     #end if
-    --autonomous_html '$html_file'
+    --autonomous_html '$html_file';
+    rm -fr '$input_folder'
   ]]></command>
   <inputs>
     <conditional name="input_type_conditional">
@@ -39,7 +39,7 @@
     </section>
   </inputs>
   <outputs>
-    <data format="html" name="html_file" label="Pathways Visualization"/>
+    <data format="html" name="html_file" label="Rpviz: Pathways Visualization"/>
   </outputs>
   <tests>
   <test>
@@ -48,9 +48,9 @@
       <param name="input_type" value="sbml"/>
       <param name="input_sbml">
         <collection type="list">
-          <element name="file1" value='rpviz/rp_001_0006.xml' />
-          <element name="file2" value='rpviz/rp_002_0010.xml' />
-          <element name="file3" value='rpviz/rp_003_0276.xml' />
+          <element name="file1" value='rpviz/rp_001_0006.xml' format='xml'/>
+          <element name="file2" value='rpviz/rp_002_0010.xml' format='xml'/>
+          <element name="file3" value='rpviz/rp_003_0276.xml' format='xml'/>
         </collection>
       </param>
     </conditional>
