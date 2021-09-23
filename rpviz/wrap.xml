@@ -8,7 +8,7 @@
     mkdir -p '$input_folder';
     #if str($input_type_conditional.input_type) == "sbml":
       #for $input in $input_type_conditional.input_sbml.keys():
-        cp $input_type_conditional.input_sbml[$input] '$input_folder/$input';
+        ln -sf $input_type_conditional.input_sbml[$input] '$input_folder/${input}.xml';
       #end for
       python -m rpviz.cli '$input_folder'
     #elif str($input_type_conditional.input_type) == "tar":
