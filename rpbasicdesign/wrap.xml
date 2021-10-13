@@ -23,11 +23,11 @@
         --o_sbol_dir 'out/sbol_export'
     ]]></command>
     <inputs>
-        <param type="data" name="rpsbml_file" label="rpSBML file" format="xml" />
+        <param name="rpsbml_file" type="data" format="xml" label="rpSBML file"/>
         <param name="backbone_id" type="text" value="BASIC_SEVA_37_CmR-p15A.1" label="Backbone part ID" />
         <param name="sample_size" type="integer" value="3" label="Number of construct to generate" />
         <section name="adv" title="Advanced Options" expanded="false">
-            <param type="data" name="parts_files" optional="true" label="Linkers and user parts" multiple="true" format="csv" />
+            <param name="parts_files" type="data" format="csv" optional="true" multiple="true" label="Linkers and user parts" />
             <param name="lms_id" type="text" value="LMS" label="LMS part ID" />
             <param name="lmp_id" type="text" value="LMP" label="LMP part ID" />
             <param name="cds_permutation" type="boolean" label="Perform CDS permutation?" checked="true" />
@@ -37,10 +37,25 @@
         <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" label="${tool.name}: constructs" />
         <data name="User parts plate" format="csv" from_work_dir="out/dnabot_in/user_parts_plate.csv" label="${tool.name}: User parts plate"/>
         <data name="Biolegio plate" format="csv" from_work_dir="out/dnabot_in/biolegio_plate.csv" label="${tool.name}: Biolegio plate"/>
-        <collection type="list" label="${tool.name}: SBOL constructs" name="sbol_dir">
-            <discover_datasets pattern="__designation__" format="xml" directory="out/sbol_export" />
+        <collection name="sbol_dir" type="list" label="${tool.name}: SBOL constructs">
+            <discover_datasets pattern="__designation_and_ext__" format="xml" directory="out/sbol_export" />
         </collection>
     </outputs>
+    <tests>
+        <test>
+        <!-- test 1: check if identical outputs are produced -->
+        <param name="rpsbml_file" value="muconate_example.xml" />
+        <param name="sample_size" value="3" />
+        <output name="Constructs" file="constructs.csv" ftype="csv" compare="diff"/>
+        <output name="User parts plate" file="user_parts_plate.csv" ftype="csv" compare="diff"/>
+        <output name="Biolegio plate" file="biolegio_plate.csv" ftype="csv" compare="diff"/>
+        <output_collection name="sbol_dir" type="list">
+            <discovered_dataset designation="BASIC_construct_A1" ftype="xml" file="BASIC_construct_A1.xml"/>
+            <discovered_dataset designation="BASIC_construct_A2" ftype="xml" file="BASIC_construct_A2.xml"/>
+            <discovered_dataset designation="BASIC_construct_A3" ftype="xml" file="BASIC_construct_A3.xml"/>
+        </output_collection>
+        </test>
+    </tests>
     <help><![CDATA[
         usage: python -m rpbasicdesign.cli [-h] --rpsbml_file RPSBML_FILE
 
