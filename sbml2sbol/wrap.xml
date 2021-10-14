@@ -1,0 +1,95 @@
+<tool id="sbml2sbol" name="SbmlToSbol" version="0.0.5">
+    <description>Convert sbml to sbol format</description>
+    <requirements>
+        <requirement type="package" version="0.0.5">sbml2sbol</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python -m sbml2sbol
+        #if str($input_type_conditional.input_type) == "Collection":
+            --input '${input_type_conditional.sbml_collection_input}'
+        #elif str($input_type_conditional.input_type) == "Single File":
+            --input '${input_type_conditional.sbml_single_input}'
+        #end if
+        #if str($rbs) == "true"
+            --rbs True
+        #else
+            --rbs False
+        #end if
+        --max_prot_per_react '$max_prot_per_react'
+        #if $tirs 
+            --tirs '$tirs'
+        #end if
+        --pathway_id '$pathway_id'
+        --uniprotID_key '$uniprotID_key'
+        --outfile '$sbol_outfile'
+
+    ]]></command>
+    <inputs>
+        <conditional name="input_type_conditional">
+            <param name="input_type" type="select" label="Source SBML format">
+                <option value="Collection" selected="True">TAR</option>
+                <option value="Single File">Collection</option>
+            </param>
+            <when value="Collection">
+                <param name="sbml_collection_input" type="data_collection" collection_type="list" format="xml" label="Source SBML" />
+            </when>
+            <when value="Single File">
+                <param name="sbml_single_input" type="data" format="xml" label="Source SBML" />
+            </when>
+        </conditional>
+        <param name="rbs" type="boolean" label="Calculate the RBS strength?" checked="true" />
+        <param name="max_prot_per_react" type="integer" value="3" label="The maximum number of proteins per reaction" />
+        <param name="tirs" type="text" label="The RBS strength values" />
+        <param name="pathway_id" type="text" value="rp_pathway" label="Group ID of the heterologous pathway" optional="true" />
+        <param name="uniprotID_key" type="text" value="selenzy" label="Uniprot ID" />
+    </inputs>
+    <outputs>
+        <data name="sbol_outfile" format="xml" label="${tool.name}: sbol outfile" />
+    </outputs>
+    <help><![CDATA[
+        usage: python -m sbml2sbol [-h]
+
+                            --input INPUT [INPUT ...]
+            
+                            --outfile OUTFILE
+
+                            [--rbs RBS]
+
+                            [--max_prot_per_react MAX_PROT_PER_REACT]
+
+                            [--tirs TIRS [TIRS ...]]
+
+                            [--pathway_id PATHWAY_ID]
+
+                            [--uniprotID_key UNIPROTID_KEY] 
+                            
+                            [--version]
+
+convert rpSBML file(s) into one single SBOL file
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+  --input INPUT [INPUT ...]
+                        path to folder(s) containing rpSBML files and/or rpSBML file path(s)
+
+  --outfile OUTFILE     specify output (SBOL) file
+
+  --rbs RBS             Calculate or not the RBS strength (default: True)
+
+  --max_prot_per_react MAX_PROT_PER_REACT
+                        The maximum number of proteins per reaction (default: 3)
+
+  --tirs TIRS [TIRS ...]
+                        The RBS strength values (default: None)
+
+  --pathway_id PATHWAY_ID
+                        Group ID of the heterologous pathway (default: rp_pathway)
+
+  --uniprotID_key UNIPROTID_KEY
+                        Group ID of the heterologous pathway (default: selenzy)
+
+  --version             show the version number and exit
+
+    ]]></help>
+</tool>
