@@ -26,7 +26,13 @@
             --mwmax_source '$adv.mwmax_source'
             --mwmax_cof '$adv.mwmax_cof'
             --timeout '$adv.timeout'
-        && cp out/*_scope.csv '$Reaction_Network'
+        files=$(ls out/*_scope.csv 2> /dev/null | wc -l)
+        if [ "$files" != "0" ]
+        then
+            cp out/*_scope.csv '$Reaction_Network'
+        else
+            cp out/results.csv '$Reaction_Network'
+        fi
   ]]></command>
     <inputs>
         <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
