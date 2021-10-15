@@ -31,7 +31,7 @@
         else
             cp out/results.csv '$Reaction_Network'
         fi
-  ]]></command>
+    ]]></command>
     <inputs>
         <param name="rulesfile"    type="data" format="csv" label="Rules File"             />
         <param name="sinkfile"     type="data" format="csv" label="Sink File"              />
