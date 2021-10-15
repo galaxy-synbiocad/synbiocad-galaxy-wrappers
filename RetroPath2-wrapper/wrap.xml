@@ -26,7 +26,7 @@
             --mwmax_source '$adv.mwmax_source'
             --mwmax_cof '$adv.mwmax_cof'
             --timeout '$adv.timeout'
-        files=$(ls out/*_scope.csv 2> /dev/null | wc -l)
+        files=`ls out/*_scope.csv 2> /dev/null | wc -l`
         if [ "$files" != "0" ]
         then
             cp out/*_scope.csv '$Reaction_Network'
