@@ -1,7 +1,7 @@
-<tool id="rpviz" name="Visualize pathways" version="0.2.1">
+<tool id="rpviz" name="Visualize pathways" version="5.7.2">
   <description>Visualize pathways from the RetroPath Suite</description>
   <requirements>
-    <requirement type="package" version="0.2.1">rpviz</requirement>
+    <requirement type="package" version="5.7.2">rptools</requirement>
   </requirements>
   <command detect_errors="exit_code"><![CDATA[
     #set input_folder="input_folder"
@@ -10,9 +10,9 @@
       #for $input in $input_type_conditional.input_sbml.keys():
         ln -sf $input_type_conditional.input_sbml[$input] '$input_folder/${input}.xml';
       #end for
-      python -m rpviz.cli '$input_folder'
+      python -m rptools.rpviz '$input_folder'
     #elif str($input_type_conditional.input_type) == "tar":
-      python -m rpviz.cli '${input_type_conditional.input_tar}'
+      python -m rptools.rpviz '${input_type_conditional.input_tar}'
     #end if
     'out'
     #if $adv.cofactor_file
@@ -66,7 +66,7 @@
   </test>
   </tests>
 <help><![CDATA[
-        usage: python -m rpviz.cli [-h] input_rpSBMLs output_folder
+        usage: python -m rptools.rpviz [-h] input_rpSBMLs output_folder
                              [--debug]
                              [--template_folder TEMPLATE_FOLDER]
                              [--linker_plate_file LINKER_PLATE_FILE]
