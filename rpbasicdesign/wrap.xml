@@ -51,8 +51,8 @@
         <output name="Biolegio plate" file="biolegio_plate.csv" ftype="csv" compare="diff"/>
         <output_collection name="sbol_dir" type="list">
             <discovered_dataset designation="BASIC_construct_A1" ftype="xml" file="BASIC_construct_A1.xml"/>
-            <discovered_dataset designation="BASIC_construct_A2" ftype="xml" file="BASIC_construct_A2.xml"/>
-            <discovered_dataset designation="BASIC_construct_A3" ftype="xml" file="BASIC_construct_A3.xml"/>
+            <discovered_dataset designation="BASIC_construct_B1" ftype="xml" file="BASIC_construct_B1.xml"/>
+            <discovered_dataset designation="BASIC_construct_C1" ftype="xml" file="BASIC_construct_C1.xml"/>
         </output_collection>
         </test>
     </tests>
