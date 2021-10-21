@@ -1,7 +1,7 @@
-<tool id="rpCompletion" name="Complete Reactions" version="5.8.0">
+<tool id="rpCompletion" name="Complete Reactions" version="5.8.1">
     <description>From the output of RP2Paths and RetroPath2.0, generate SBML unique and complete (with cofactors) pathways with mono-component reactions</description>
     <requirements>
-        <requirement type="package" version="5.8.0">rptools</requirement>
+        <requirement type="package" version="5.8.1">rptools</requirement>
     </requirements>
     <stdio>
         <exit_code range="1" level="fatal" description="Could not Xref compartment_id" />
@@ -21,8 +21,8 @@
     <inputs>
         <param name="rp2paths_pathways" type="data" format="csv" label="RP2paths pathways" />
         <param name="rp2paths_compounds" type="data" format="tsv" label="RP2paths compounds" />
-        <param name="rp2_pathways" type="data" format="csv" label="RetroPath2.0 output" />
-        <param name="sink" type="data" format="csv" label="RpExtractSink output" />
+        <param name="rp2_pathways" type="data" format="csv" label="RetroPath2.0 metabolic network" />
+        <param name="sink" type="data" format="csv" label="Sink from SBML" />
         <section name="adv" title="Advanced Options" expanded="false">
             <param name="max_subpaths_filter" type="integer" value="10" label="Max subpaths generated per pathway" />
             <param name="upper_flux_bound" type="integer" value="999999" label="Upper flux bound" />
