@@ -11,6 +11,7 @@
             --NoMSA
         #end if
         --taxonIDs '$adv.taxonIDs'
+        --nb_ids '$adv.nb_ids'
     ]]></command>
     <inputs>
 		<param name="pathway" type="data" format="xml" label="Pathway (rpSBML)" />
