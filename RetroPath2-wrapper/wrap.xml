@@ -45,7 +45,7 @@
             <param name="dmin"         type="integer" value="0"    label="Minimum rule diameter"                 />
             <param name="dmax"         type="integer" value="1000" label="Maximum rule diameter"                 />
             <param name="mwmax_source" type="integer" value="1000" label="Molecular weight of source (Da)"       />
-            <param name="mwmax_cof"    type="integer" value="1000" label="Molecular weight of coefficients (Da)" />
+            <param name="mwmax_cof"    type="integer" value="1000" label="Molecular weight of cofactors (Da)" />
             <param name="timeout"      type="integer" value="30"   label="Timeout (min)"                         />
         </section>
     </inputs>
