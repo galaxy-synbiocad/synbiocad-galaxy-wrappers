@@ -5,7 +5,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         python -m partsgenie_client
-        '$url'
+        '$adv.url'
         '$enzymes_file'
         '$taxonomy_id'
         '$parts'
