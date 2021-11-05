@@ -1,7 +1,7 @@
-<tool id="rpExtractSink" name="Sink from SBML" version="5.8.1">
+<tool id="rpExtractSink" name="Sink from SBML" version="5.8.2">
     <description>Generate the RetroPath2.0 sink file from an SBML input</description>
     <requirements>
-        <requirement type="package" version="5.8.1">rptools</requirement>
+        <requirement type="package" version="5.8.2">rptools</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         python -m rptools.rpextractsink
@@ -43,7 +43,6 @@ The results are written to a RetroPath2.0 friendly CSV file format that can be u
 
 Input
 -----
-|
 
 Required:
 
@@ -63,19 +62,13 @@ Output
 Project Links
 ---------------------
 
-* `GitHub <https://github.com/Galaxy-SynBioCAD/rpExtractSink>`_
+* `GitHub <https://github.com/brsynth/rptools>`_
 
 Version
 ----------
 
-1.0
+5.8.2
 
-
-Dependencies
--------------
-
-* `libSBML <http://sbml.org/Software/libSBML>`_
-* `cobrapy <https://opencobra.github.io/cobrapy>`_
 
 Authors
 -------
@@ -87,7 +80,7 @@ Authors
 License
 -------
 
-`MIT <https://raw.githubusercontent.com/Galaxy-SynBioCAD/rpExtractSink/standalone-dev/LICENSE>`_
+`MIT <https://github.com/brsynth/rptools/blob/master/LICENSE>`_
 
 Acknowledgments
 ---------------
