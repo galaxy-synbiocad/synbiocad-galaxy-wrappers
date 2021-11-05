@@ -44,15 +44,15 @@
     <tests>
         <test>
         <!-- test 1: check if identical outputs are produced -->
-        <param name="rpsbml_file" value="muconate_example.xml" />
+        <param name="rpsbml_file" value="lycopene_CrtEBI_from_selenzy.xml" />
         <param name="sample_size" value="3" />
         <output name="Constructs" file="constructs.csv" ftype="csv" compare="diff"/>
         <output name="User parts plate" file="user_parts_plate.csv" ftype="csv" compare="diff"/>
         <output name="Biolegio plate" file="biolegio_plate.csv" ftype="csv" compare="diff"/>
         <output_collection name="sbol_dir" type="list">
             <discovered_dataset designation="BASIC_construct_A1" ftype="xml" file="BASIC_construct_A1.xml"/>
-            <discovered_dataset designation="BASIC_construct_A2" ftype="xml" file="BASIC_construct_A2.xml"/>
-            <discovered_dataset designation="BASIC_construct_A3" ftype="xml" file="BASIC_construct_A3.xml"/>
+            <discovered_dataset designation="BASIC_construct_B1" ftype="xml" file="BASIC_construct_B1.xml"/>
+            <discovered_dataset designation="BASIC_construct_C1" ftype="xml" file="BASIC_construct_C1.xml"/>
         </output_collection>
         </test>
     </tests>
