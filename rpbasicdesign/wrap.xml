@@ -1,7 +1,7 @@
-<tool id="rpbasicdesign" name="BasicDesign" version="0.3.2">
+<tool id="rpbasicdesign" name="BasicDesign" version="0.3.4">
     <description>Build DNA-BOT input files from rpSBML</description>
     <requirements>
-        <requirement type="package" version="0.3.2">rpbasicdesign</requirement>
+        <requirement type="package" version="0.3.4">rpbasicdesign</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         python -m rpbasicdesign.cli
@@ -34,25 +34,25 @@
         </section>
     </inputs>
     <outputs>
-        <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" label="${tool.name}: constructs" />
-        <data name="User parts plate" format="csv" from_work_dir="out/dnabot_in/user_parts_plate.csv" label="${tool.name}: User parts plate"/>
-        <data name="Biolegio plate" format="csv" from_work_dir="out/dnabot_in/biolegio_plate.csv" label="${tool.name}: Biolegio plate"/>
-        <collection name="sbol_dir" type="list" label="${tool.name}: SBOL constructs">
+        <data name="Constructs" format="csv" from_work_dir="out/dnabot_in/constructs.csv" label="${tool.name} - ${rpsbml_file.name}: constructs" />
+        <data name="User parts plate" format="csv" from_work_dir="out/dnabot_in/user_parts_plate.csv" label="${tool.name} - ${rpsbml_file.name}: User parts plate"/>
+        <data name="Biolegio plate" format="csv" from_work_dir="out/dnabot_in/biolegio_plate.csv" label="${tool.name} - ${rpsbml_file.name}: Biolegio plate"/>
+        <collection name="sbol_dir" type="list" label="${tool.name} - ${rpsbml_file.name}: SBOL constructs">
             <discover_datasets pattern="__designation_and_ext__" format="xml" directory="out/sbol_export" />
         </collection>
     </outputs>
     <tests>
         <test>
         <!-- test 1: check if identical outputs are produced -->
-        <param name="rpsbml_file" value="muconate_example.xml" />
+        <param name="rpsbml_file" value="lycopene_CrtEBI_from_selenzy.xml" />
         <param name="sample_size" value="3" />
         <output name="Constructs" file="constructs.csv" ftype="csv" compare="diff"/>
         <output name="User parts plate" file="user_parts_plate.csv" ftype="csv" compare="diff"/>
         <output name="Biolegio plate" file="biolegio_plate.csv" ftype="csv" compare="diff"/>
         <output_collection name="sbol_dir" type="list">
             <discovered_dataset designation="BASIC_construct_A1" ftype="xml" file="BASIC_construct_A1.xml"/>
-            <discovered_dataset designation="BASIC_construct_A2" ftype="xml" file="BASIC_construct_A2.xml"/>
-            <discovered_dataset designation="BASIC_construct_A3" ftype="xml" file="BASIC_construct_A3.xml"/>
+            <discovered_dataset designation="BASIC_construct_B1" ftype="xml" file="BASIC_construct_B1.xml"/>
+            <discovered_dataset designation="BASIC_construct_C1" ftype="xml" file="BASIC_construct_C1.xml"/>
         </output_collection>
         </test>
     </tests>
